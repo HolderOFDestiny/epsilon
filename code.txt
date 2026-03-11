@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&#8709;</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--fg:#0f0;--dim:#1a3d1a;--mid:#2a7a2a;--acc:#ff0;--red:#c00;--gold:#cc9900;--gold2:#ffcc00;--plat:#e8e8e8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--fg);font-family:'Share Tech Mono',monospace;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+#wrap{width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;}
+#stages,#stages2,#keyScreen,#advWrap,#certMaster,#zetaKeyScreen,#zetaWrap,#certMax,.cert{display:none;width:100%;}
+#stages.panel-active,#stages2.panel-active{display:block;}
+#keyScreen.panel-active,#zetaKeyScreen.panel-active{display:flex;flex-direction:column;align-items:center;gap:1rem;}
+#advWrap.panel-active,#zetaWrap.panel-active{display:block;}
+#certMaster.panel-active,#certMax.panel-active{display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1.5rem;}
+.cert.panel-active{display:flex;}
+.stage{display:none;flex-direction:column;align-items:center;text-align:center;max-width:560px;width:100%;gap:.9rem;}
+.stage.active{display:flex;}
+.tag{font-size:.6rem;color:var(--dim);letter-spacing:.5em;text-transform:uppercase;}
+.box{font-size:.63rem;color:var(--dim);line-height:1.9;letter-spacing:.07em;border:1px solid #0c1f0c;padding:.9rem 1.1rem;width:100%;text-align:left;font-family:'Share Tech Mono',monospace;background:#000;}
+.box .h{color:var(--fg);}.box .a{color:var(--acc);}.box .s{color:#0c1f0c;display:block;}
+.pips{display:flex;gap:.3rem;margin-bottom:.3rem;flex-wrap:wrap;}
+.pip{width:12px;height:2px;background:var(--dim);}.pip.on{background:var(--fg);}.pip.cur{background:var(--acc);}
+input{background:transparent;border:none;border-bottom:1px solid var(--mid);color:var(--fg);font-size:1rem;padding:.4rem .6rem;text-align:center;outline:none;width:240px;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;}
+input:focus{border-color:var(--fg);}input::placeholder{color:var(--dim);font-size:.75rem;letter-spacing:.05em;}
+button{background:transparent;border:1px solid var(--dim);color:var(--dim);padding:.45rem 2rem;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;font-size:.72rem;text-transform:uppercase;transition:border-color .2s,color .2s;}
+button:hover{border-color:var(--fg);color:var(--fg);}
+.err{color:var(--red);font-size:.65rem;letter-spacing:.3em;height:.8em;opacity:0;transition:opacity .12s;text-transform:uppercase;}
+.err.show{opacity:1;}
+.cert{flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1.5rem;max-width:560px;width:100%;}
+.cert-table{width:100%;border-collapse:collapse;font-size:.62rem;font-family:'Share Tech Mono',monospace;}
+.cert-table td{padding:.35rem .6rem;border:1px solid #0c2a0c;letter-spacing:.1em;}
+.cert-table .lbl{color:var(--dim);width:38%;border-color:#0c1f0c;}.cert-table .val{color:var(--fg);}.cert-table .acc-val{color:var(--acc);}
+.cert-outer{border:1px solid var(--mid);padding:.15rem;}.cert-inner{border:1px solid #0c2a0c;padding:1.2rem 1.4rem;width:100%;}
+.cert-title-row{text-align:center;padding:.6rem !important;background:#000;}
+.cert-title{font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.35em;color:var(--acc);display:block;}
+.cert-rank{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:900;background:linear-gradient(90deg,#886600,#ffe066,#fff,#ffe066,#886600);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s linear infinite;display:block;margin:.3rem 0;}
+@keyframes sh{0%{background-position:200% center;}100%{background-position:-200% center;}}
+.cert-divider{height:1px;background:linear-gradient(90deg,transparent,var(--acc),transparent);margin:.3rem 0;}
+.ghost-btn{background:transparent;border:1px solid transparent;color:transparent;padding:.4rem 1.8rem;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;font-size:.65rem;text-transform:uppercase;transition:all .4s;margin-top:.8rem;}
+.ghost-btn:hover{border-color:#1a3d1a;color:#1a3d1a;}
+#keyScreen,#zetaKeyScreen{max-width:480px;text-align:center;}
+.key-box{border:1px solid #0c2a0c;padding:1.2rem;width:100%;font-size:.6rem;color:var(--dim);line-height:2;letter-spacing:.1em;}
+.key-box .kh{color:var(--fg);}.key-box .ka{color:var(--acc);}
+#advWrap,#zetaWrap{width:100%;max-width:560px;}
+.adv-stage{display:none;flex-direction:column;align-items:center;text-align:center;max-width:560px;width:100%;gap:.9rem;}
+.adv-stage.active{display:flex;}
+.adv-pips{display:flex;gap:.2rem;margin-bottom:.3rem;flex-wrap:wrap;justify-content:center;}
+.adv-pip{width:10px;height:2px;background:var(--dim);}.adv-pip.on{background:var(--fg);}.adv-pip.cur{background:var(--acc);}
+.adv-tag{font-size:.6rem;color:#0a260a;letter-spacing:.5em;text-transform:uppercase;}
+#certMaster{max-width:560px;}
+.master-outer{border:2px solid #886600;padding:.2rem;width:100%;}
+.master-mid{border:1px solid #cc9900;padding:.15rem;width:100%;}
+.master-inner{border:1px solid #886600;padding:1.4rem;width:100%;}
+.master-table{width:100%;border-collapse:collapse;font-size:.62rem;font-family:'Share Tech Mono',monospace;}
+.master-table td{padding:.35rem .6rem;border:1px solid #1a1000;letter-spacing:.1em;}
+.master-table .lbl{color:#886600;width:38%;}.master-table .val{color:var(--acc);}.master-table .em-val{color:#fff;}
+.master-rank{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;background:linear-gradient(90deg,#664400,#ffcc00,#fff,#ffcc00,#664400);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 3s linear infinite;display:block;margin:.4rem 0;}
+.master-title{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.4em;color:#cc9900;display:block;}
+.zeta-stage{display:none;flex-direction:column;align-items:center;text-align:center;max-width:560px;width:100%;gap:.9rem;}
+.zeta-stage.active{display:flex;}
+.zeta-pips{display:flex;gap:.2rem;margin-bottom:.3rem;flex-wrap:wrap;justify-content:center;}
+.zeta-pip{width:8px;height:2px;background:#0a0a0a;}.zeta-pip.on{background:#e8e8e8;}.zeta-pip.cur{background:#00ffff;}
+.zeta-tag{font-size:.6rem;color:#001a1a;letter-spacing:.6em;text-transform:uppercase;}
+.zeta-box{font-size:.6rem;color:#003333;line-height:1.9;letter-spacing:.07em;border:1px solid #002222;padding:.9rem 1.1rem;width:100%;text-align:left;font-family:'Share Tech Mono',monospace;background:#000;}
+.zeta-box .zh{color:#00ffff;}.zeta-box .za{color:#ff00ff;}.zeta-box .zs{color:#001a1a;display:block;}
+.zeta-input{background:transparent;border:none;border-bottom:1px solid #004444;color:#00ffff;font-size:1rem;padding:.4rem .6rem;text-align:center;outline:none;width:240px;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;}
+.zeta-input:focus{border-color:#00ffff;}
+.zeta-btn{background:transparent;border:1px solid #001a1a;color:#001a1a;padding:.45rem 2rem;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;font-size:.72rem;text-transform:uppercase;transition:all .2s;}
+.zeta-btn:hover{border-color:#00ffff;color:#00ffff;}
+#certMax{max-width:580px;}
+.max-frame{position:relative;width:100%;padding:.3rem;background:linear-gradient(135deg,#000 0%,#0a0a0a 50%,#000 100%);}
+.max-border-outer{border:2px solid #00ffff;padding:.3rem;position:relative;}
+.max-border-mid{border:1px solid #ff00ff;padding:.2rem;position:relative;}
+.max-border-inner{border:1px solid #00ffff;padding:1.6rem 1.4rem;background:#000;position:relative;}
+.max-tri-container{display:flex;justify-content:center;margin:.6rem 0;}
+.max-tri-container svg{filter:drop-shadow(0 0 6px #00ffff) drop-shadow(0 0 12px #ff00ff);}
+@keyframes tri-pulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+.tri-animate{animation:tri-pulse 2.5s ease-in-out infinite;}
+.tri-animate2{animation:tri-pulse 2.5s ease-in-out infinite .5s;}
+.tri-animate3{animation:tri-pulse 2.5s ease-in-out infinite 1s;}
+.tri-animate4{animation:tri-pulse 2s ease-in-out infinite .25s;}
+.max-name{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:.4em;text-align:center;background:linear-gradient(90deg,#00ffff,#ffffff,#ff00ff,#ffffff,#00ffff);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 3s linear infinite;margin:.4rem 0;}
+.max-rank{font-family:'Cinzel',serif;font-size:2rem;font-weight:900;background:linear-gradient(90deg,#003333,#00ffff,#fff,#ff00ff,#fff,#00ffff,#003333);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 2s linear infinite;display:block;margin:.3rem 0;text-align:center;}
+.max-table{width:100%;border-collapse:collapse;font-size:.62rem;font-family:'Share Tech Mono',monospace;margin-top:.6rem;}
+.max-table td{padding:.35rem .6rem;border:1px solid #001a1a;letter-spacing:.1em;}
+.max-table .lbl{color:#004444;width:38%;}.max-table .val{color:#00ffff;}.max-table .em-val{color:#fff;}.max-table .mag-val{color:#ff00ff;}
+.max-title{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.45em;color:#00ffff;display:block;text-align:center;}
+.max-divider{height:1px;background:linear-gradient(90deg,transparent,#00ffff,#ff00ff,#00ffff,transparent);margin:.6rem 0;}
+@keyframes scan{0%{transform:translateY(-100%);}100%{transform:translateY(100vh);}}
+.max-scanline{position:fixed;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,255,.15),transparent);animation:scan 4s linear infinite;pointer-events:none;z-index:9999;}
+.zeta-key-box{border:1px solid #002222;padding:1.2rem;width:100%;font-size:.6rem;color:#003333;line-height:2;letter-spacing:.1em;}
+.zeta-key-box .zkh{color:#00ffff;}.zeta-key-box .zka{color:#ff00ff;}
+</style>
+</head>
+<body>
+<div class="max-scanline"></div>
+<div id="wrap">
+
+<div id="stages" class="panel-active">
+<div class="stage active" id="stage1"><div class="tag">&#9632; 01 / 22</div><div class="pips" id="p1"></div><div class="box"><span class="s">-- INTERCEPT LOG --</span>RAILS : <span class="h">3</span><br>SEQUENCE : <span style="color:#0c2a0c;">0x1F 0x7A 0x3C</span><br>AMPLITUDE : <span style="color:#0c2a0c;">440 Hz</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>TRANSMISSION : <span class="a">S O H D W A</span><br>RECOVER PLAINTEXT &rarr; <span class="a">?</span></div><input id="s1" placeholder="plaintext" autocomplete="off"><button onclick="check1()">submit</button><div class="err" id="e1">&#9644; denied</div></div>
+<div class="stage" id="stage2"><div class="tag">&#9632; 02 / 22</div><div class="pips" id="p2"></div><div class="box"><span class="s">-- MIRROR PROTOCOL --</span>AXIS : <span class="h">SYMMETRIC</span><br>OFFSET : <span style="color:#0c2a0c;">17</span><br>PERIOD : <span style="color:#0c2a0c;">26</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">M R T S G</span><br>RESTORE PLAINTEXT &rarr; <span class="a">?</span></div><input id="s2" placeholder="plaintext" autocomplete="off"><button onclick="check2()">submit</button><div class="err" id="e2">&#9644; denied</div></div>
+<div class="stage" id="stage3"><div class="tag">&#9632; 03 / 22</div><div class="pips" id="p3"></div><div class="box"><span class="s">-- SHIFT REGISTER --</span>DERIVE KEY &rarr; <span class="h">VOWELS IN : COORDINATES</span><br>MODULUS : <span style="color:#0c2a0c;">97</span><br>IC : <span style="color:#0c2a0c;">0.0654</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">G J F H T S</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s3" placeholder="plaintext" autocomplete="off"><button onclick="check3()">submit</button><div class="err" id="e3">&#9644; denied</div></div>
+<div class="stage" id="stage4"><div class="tag">&#9632; 04 / 22</div><div class="pips" id="p4"></div><div class="box"><span class="s">-- GRID TRANSPOSITION --</span>KEY : <span class="h">PRISM</span><br>DIMENSIONS : <span class="h">2 &times; 5</span><br>PAD CHAR : <span class="h">X</span> (strip on decode)<br>ENTROPY : <span style="color:#0c2a0c;">0xAF 0x3B</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">U E T X V O A P L N</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s4" placeholder="plaintext" autocomplete="off"><button onclick="check4()">submit</button><div class="err" id="e4">&#9644; denied</div></div>
+<div class="stage" id="stage5"><div class="tag">&#9632; 05 / 22</div><div class="pips" id="p5"></div><div class="box"><span class="s">-- COORDINATE MAP --</span>KEY-WORD : <span class="h">FORGE</span> | I&#8211;J MERGED<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>&nbsp;&nbsp;<span class="h">1 2 3 4 5</span><br><span class="h">1</span>[F O R G E]<br><span class="h">2</span>[A B C D H]<br><span class="h">3</span>[I K L M N]<br><span class="h">4</span>[P Q S T U]<br><span class="h">5</span>[V W X Y Z]<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>FREQ : <span style="color:#0c2a0c;">0.067 0.041 0.038</span><br>COORDS : <span class="a">23 31 41 25 15 13</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s5" placeholder="plaintext" autocomplete="off"><button onclick="check5()">submit</button><div class="err" id="e5">&#9644; denied</div></div>
+<div class="stage" id="stage6"><div class="tag">&#9632; 06 / 22</div><div class="pips" id="p6"></div><div class="box"><span class="s">-- RECIPROCAL STREAM --</span>DERIVE KEY &rarr; <span class="h">FIRST LETTERS OF EACH LINE :</span><br>&nbsp;&nbsp;<span class="h">Kingdoms rise on coded ground</span><br>&nbsp;&nbsp;<span class="h">Every wall a written wound</span><br>&nbsp;&nbsp;<span class="h">Yet silence speaks the sharpest sound</span><br>HASH : <span style="color:#0c2a0c;">0x5F2A</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">S W S X E N</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s6" placeholder="plaintext" autocomplete="off"><button onclick="check6()">submit</button><div class="err" id="e6">&#9644; denied</div></div>
+<div class="stage" id="stage7"><div class="tag">&#9632; 07 / 22</div><div class="pips" id="p7"></div><div class="box"><span class="s">-- DIGRAPH SUBSTITUTION --</span>DERIVE KEY &rarr; <span class="h">LETTERS AT POSITIONS 2,5,1,4,3</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IN : <span class="h">TRANCE</span><br>PAD CHAR : <span class="h">X</span> (strip on decode)<br>BLOCK LEN : <span style="color:#0c2a0c;">64</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>CIPHERTEXT : <span class="a">U Q D T E K T V</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s7" placeholder="plaintext" autocomplete="off"><button onclick="check7()">submit</button><div class="err" id="e7">&#9644; denied</div></div>
+</div>
+
+<div class="cert" id="certA">
+<div class="tag">&#9632; &#9632; &#9632; &#9632; &nbsp; CLEARANCE VERIFIED &nbsp; &#9632; &#9632; &#9632; &#9632;</div>
+<div class="cert-divider" style="width:100%;"></div>
+<div class="cert-outer" style="width:100%;"><div class="cert-inner">
+<table class="cert-table">
+<tr><td colspan="2" class="cert-title-row"><span class="cert-title">Certificate of Completion</span><span class="cert-rank">OPERATIVE</span></td></tr>
+<tr><td class="lbl">CLEARANCE</td><td class="acc-val">INTERMEDIATE</td></tr>
+<tr><td class="lbl">PROTOCOLS</td><td class="val">I &mdash; VII DECODED</td></tr>
+<tr><td class="lbl">TIMESTAMP</td><td class="val" id="certA-ts">&#8212;</td></tr>
+<tr><td class="lbl">STATUS</td><td class="acc-val">AUTHORISED</td></tr>
+<tr><td class="lbl" style="color:#0d300d;">SERIAL</td><td style="font-size:.48rem;color:#0d300d;">&#216;-2A3F-<span id="cA-frag" style="color:#0d300d;">ZERO</span>-0x00</td></tr>
+</table>
+<div class="cert-divider" style="margin-top:.7rem;"></div>
+<div style="text-align:center;"><span style="font-size:.45rem;color:#061206;letter-spacing:.4em;">CRYPTOGRAPHIC AUTHORITY &bull; REF &#216;-A</span></div>
+</div></div>
+<button class="ghost-btn" onclick="_proceedToB()">&#9632; proceed &#9632;</button>
+</div>
+
+<div id="stages2">
+<div class="stage active" id="stage8"><div class="tag">&#9632; 08 / 22</div><div class="pips" id="p8"></div><div class="box"><span class="s">-- FRACTIONATION --</span>KEY-SQUARE : <span class="h">SPHINX</span> (I&#8211;J merged)<br>PERIOD : <span class="h">7</span><br>&nbsp;&nbsp;<span class="h">S P H I N</span><br>&nbsp;&nbsp;<span class="h">X A B C D</span><br>&nbsp;&nbsp;<span class="h">E F G K L</span><br>&nbsp;&nbsp;<span class="h">M O Q R T</span><br>&nbsp;&nbsp;<span class="h">U V W Y Z</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>ENTROPY : <span style="color:#0c2a0c;">1.847 bits</span><br>FRACTIONATED : <span class="a">F E S E T O S</span><br>RECOVER PLAINTEXT &rarr; <span class="a">?</span></div><input id="s8" placeholder="plaintext" autocomplete="off"><button onclick="check8()">submit</button><div class="err" id="e8">&#9644; denied</div></div>
+<div class="stage" id="stage9"><div class="tag">&#9632; 09 / 22</div><div class="pips" id="p9"></div><div class="box"><span class="s">-- ADDITIVE COORDINATE CIPHER --</span>POLYBIUS KEY : <span class="h">TRAITOR</span> (I&#8211;J merged)<br>ADDITIVE KEY : <span class="h">PREVIOUS ANSWER</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="h">1 2 3 4 5</span><br><span class="h">1</span>[T R A I O]<br><span class="h">2</span>[B C D E F]<br><span class="h">3</span>[G H K L M]<br><span class="h">4</span>[N P Q S U]<br><span class="h">5</span>[V W X Y Z]<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>IC : <span style="color:#0c2a0c;">0.0412</span><br>TRANSMISSION : <span class="a">66 54 47 55 53 59 59</span><br>RESTORE PLAINTEXT &rarr; <span class="a">?</span></div><input id="s9" placeholder="plaintext" autocomplete="off"><button onclick="check9()">submit</button><div class="err" id="e9">&#9644; denied</div></div>
+<div class="stage" id="stage10"><div class="tag">&#9632; 10 / 22</div><div class="pips" id="p10"></div><div class="box"><span class="s">-- POLYALPHABETIC --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>LENGTH : <span class="h">7</span><br>IC : <span style="color:#0c2a0c;">0.0440</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">B L R V W W M C</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s10" placeholder="plaintext" autocomplete="off"><button onclick="check10()">submit</button><div class="err" id="e10">&#9644; denied</div></div>
+<div class="stage" id="stage11"><div class="tag">&#9632; 11 / 22</div><div class="pips" id="p11"></div><div class="box"><span class="s">-- ADFGVX ENCODING --</span>KEYWORD : <span class="h">PREVIOUS ANSWER</span> (first 7 unique letters)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="h">A D F G V X</span><br><span class="h">A</span>[M E R I D A]<br><span class="h">D</span>[N B C F G H]<br><span class="h">F</span>[K L O P Q S]<br><span class="h">G</span>[T U V W X Y]<br><span class="h">V</span>[Z . . . . .]<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>WEIGHT : <span style="color:#0c2a0c;">0.731</span><br>MSG : <span class="a">FF DD FX AG AV AG AX DA</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s11" placeholder="plaintext" autocomplete="off"><button onclick="check11()">submit</button><div class="err" id="e11">&#9644; denied</div></div>
+<div class="stage" id="stage12"><div class="tag">&#9632; 12 / 22</div><div class="pips" id="p12"></div><div class="box"><span class="s">-- SYMBOL SUBSTITUTION --</span>ALPHABET : <span class="h">TWO-SYMBOL (A-B)</span><br>DERIVE SHIFT &rarr; <span class="h">COUNT Ls IN : NULL</span><br>SEED : <span style="color:#0c2a0c;">0xDEAD</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span><span class="a">DCBCC DCCCC CCCCC CDCCC DCCDC CCDDD</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s12" placeholder="plaintext" autocomplete="off"><button onclick="check12()">submit</button><div class="err" id="e12">&#9644; denied</div></div>
+<div class="stage" id="stage13"><div class="tag">&#9632; 13 / 22</div><div class="pips" id="p13"></div><div class="box"><span class="s">-- CONTINUOUS-KEY POLYALPHABETIC --</span>IC : <span class="h">0.0654</span><br>KEY PROVENANCE : <span class="h">FOUNDING DOCUMENT</span><br>KEY LENGTH : <span class="h">8</span><br>KEY CHARS : <span class="h">CHARS 1-8 (ALPHA ONLY)</span><br>ENTROPY : <span style="color:#0c2a0c;">3.12</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT (VIII) : <span class="a">O I G A M C I Z</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s13" placeholder="plaintext" autocomplete="off"><button onclick="check13()">submit</button><div class="err" id="e13">&#9644; denied</div></div>
+<div class="stage" id="stage14"><div class="tag">&#9632; 14 / 22</div><div class="pips" id="p14"></div><div class="box"><span class="s">-- PLAYFAIR --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>PAD CHAR : <span class="h">X</span> (strip on decode)<br>I-J MERGED : <span class="h">YES</span><br>BLOCK : <span style="color:#0c2a0c;">512</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>CIPHERTEXT : <span class="a">E B Q C E A N Y Q U</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s14" placeholder="plaintext" autocomplete="off"><button onclick="check14()">submit</button><div class="err" id="e14">&#9644; denied</div></div>
+</div>
+
+<div class="cert" id="certB">
+<div class="tag">&#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &nbsp; GRANDMASTER VERIFIED &nbsp; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632;</div>
+<div class="cert-divider" style="width:100%;"></div>
+<div class="cert-outer" style="width:100%;"><div class="cert-inner">
+<table class="cert-table">
+<tr><td colspan="2" class="cert-title-row"><span class="cert-title">Grandmaster Certificate</span><span class="cert-rank">GRANDMASTER</span></td></tr>
+<tr><td class="lbl">CLEARANCE</td><td class="acc-val">MAXIMUM</td></tr>
+<tr><td class="lbl">PROTOCOLS</td><td class="val">I &mdash; XIV ALL DECODED</td></tr>
+<tr><td class="lbl">TIMESTAMP</td><td class="val" id="certB-ts">&#8212;</td></tr>
+<tr><td class="lbl">STATUS</td><td class="acc-val">&#9632; ACCESS GRANTED &#9632;</td></tr>
+<tr><td class="lbl" style="color:#0d300d;">SERIAL</td><td style="font-size:.48rem;color:#0d300d;">&#216;-FF91-<span id="cB-frag" style="color:#0d300d;">POINT</span>-0xFF</td></tr>
+</table>
+<div class="cert-divider" style="margin-top:.7rem;"></div>
+<div style="text-align:center;"><span style="font-size:.45rem;color:#061206;letter-spacing:.4em;">CRYPTOGRAPHIC AUTHORITY &bull; REF &#216;-B</span></div>
+</div></div>
+<button class="ghost-btn" onclick="_proceedToKey()">&#9632; proceed &#9632;</button>
+</div>
+
+<div id="keyScreen">
+<div class="tag">&#9632; &#9632; &#9632; &#9632; &nbsp; TERMINAL ACCESS &nbsp; &#9632; &#9632; &#9632; &#9632;</div>
+<div class="key-box">CLASSIFICATION : <span class="kh">SIGMA-TIER</span><br>DERIVATION : <span class="ka">&#216;-A &oplus; &#216;-B</span><br><span style="color:#0c1f0c;">Concatenate the serial fragments from both issued certificates and submit below.</span><br>KEY ENTRY &rarr; <span class="ka">?</span></div>
+<input id="sKey" placeholder="combined key" autocomplete="off">
+<button onclick="checkKey()">authenticate</button>
+<div class="err" id="eKey">&#9644; key invalid</div>
+</div>
+
+<div id="advWrap"></div>
+
+<div id="certMaster">
+<div class="tag">&#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &nbsp; ZETA CLEARANCE &nbsp; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632;</div>
+<div style="height:1px;width:100%;background:linear-gradient(90deg,transparent,#cc9900,transparent);"></div>
+<div class="master-outer"><div class="master-mid"><div class="master-inner">
+<table class="master-table">
+<tr><td colspan="2" style="text-align:center;padding:.8rem;background:#000;border-color:#1a1000;"><span class="master-title">&#9632; Master Cryptanalyst Certificate &#9632;</span><span class="master-rank">ARCHITECT</span></td></tr>
+<tr><td class="lbl">CLEARANCE</td><td class="em-val">ZETA</td></tr>
+<tr><td class="lbl">ALL PROTOCOLS</td><td class="val">I &mdash; XX FULLY DECODED</td></tr>
+<tr><td class="lbl">TIMESTAMP</td><td class="val" id="certM-ts">&#8212;</td></tr>
+<tr><td class="lbl">RANK</td><td class="em-val">GRANDMASTER ARCHITECT</td></tr>
+<tr><td class="lbl" style="color:#1a1000;">AUTHORITY</td><td style="font-size:.48rem;color:#1a1000;">&#216;-ZETA-TIER-CRYPTOGRAPHIC-AUTHORITY</td></tr>
+</table>
+<div style="height:1px;background:linear-gradient(90deg,transparent,#cc9900,transparent);margin:.8rem 0;"></div>
+<div style="text-align:center;"><span style="font-size:.44rem;color:#1a1000;letter-spacing:.35em;">CRYPTOGRAPHIC AUTHORITY &bull; REF &#216;-&#918;</span></div>
+</div></div></div>
+<div style="font-size:.55rem;color:#332200;letter-spacing:.3em;margin-top:.5rem;text-align:center;">&#9632; TERMINAL &#9632; ZETA &#9632; ACHIEVED &#9632;</div>
+<button class="ghost-btn" onclick="_proceedToZetaKey()" style="margin-top:1rem;border-color:#1a1000;color:#1a1000;opacity:.4;">&#9632; &#9632; deeper &#9632; &#9632;</button>
+</div>
+
+<div id="zetaKeyScreen">
+<div class="zeta-tag">&#9632; &#9632; &#9632; &#9632; &nbsp; BEYOND ZETA &nbsp; &#9632; &#9632; &#9632; &#9632;</div>
+<div class="zeta-key-box">CLASSIFICATION : <span class="zkh">BEYOND-CLASSIFICATION</span><br>DERIVATION : <span class="zka">FIRST LETTER OF EVERY ANSWER &mdash; ALL 20</span><br><span style="color:#001a1a;">Concatenate the first letter of each stage answer (1&ndash;20) in order and submit below.</span><br>KEY ENTRY &rarr; <span class="zka">?</span></div>
+<input class="zeta-input" id="sZeta" placeholder="master key" autocomplete="off">
+<button class="zeta-btn" onclick="checkZetaKey()">authenticate</button>
+<div class="err" id="eZeta" style="color:#ff00ff;">&#9644; key rejected</div>
+</div>
+
+<div id="zetaWrap"></div>
+
+<div id="certMax">
+<div class="zeta-tag" style="letter-spacing:.7em;color:#001a1a;">&#9650; &#9650; &#9650; &nbsp; MAXIMUM CLEARANCE ACHIEVED &nbsp; &#9650; &#9650; &#9650;</div>
+<div class="max-divider" style="width:100%;"></div>
+<div class="max-frame" style="width:100%;">
+<div class="max-border-outer"><div class="max-border-mid"><div class="max-border-inner">
+<div class="max-tri-container">
+<svg width="160" height="140" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <polygon class="tri-animate" points="80,4 156,136 4,136" stroke="#00ffff" stroke-width="1.5" fill="none"/>
+  <polygon class="tri-animate2" points="80,30 120,110 40,110" stroke="#ff00ff" stroke-width="1" fill="none" opacity=".85"/>
+  <polygon class="tri-animate3" points="80,52 108,100 52,100" stroke="#00ffff" stroke-width=".8" fill="none" opacity=".7"/>
+  <polygon class="tri-animate4" points="80,70 96,98 64,98" stroke="#ffffff" stroke-width=".6" fill="rgba(255,255,255,0.03)" opacity=".9"/>
+  <circle cx="80" cy="90" r="2" fill="#00ffff" opacity=".9"/>
+  <circle cx="80" cy="4" r="1.5" fill="#ff00ff"/>
+  <circle cx="156" cy="136" r="1.5" fill="#ff00ff"/>
+  <circle cx="4" cy="136" r="1.5" fill="#ff00ff"/>
+</svg>
+</div>
+<div class="max-name" id="maxNameDisplay">OPERATOR</div>
+<div style="display:block;text-align:center;">
+  <span class="max-rank">MAX CLEARANCE</span>
+</div>
+<div class="max-divider"></div>
+<table class="max-table">
+<tr><td colspan="2" style="text-align:center;padding:.7rem;background:#000;border-color:#001a1a;">
+  <span class="max-title">&#9650; Certificate of Absolute Authority &#9650;</span>
+</td></tr>
+<tr><td class="lbl">CLEARANCE TIER</td><td class="mag-val">&#9650; MAXIMUM &#9650;</td></tr>
+<tr><td class="lbl">DESIGNATION</td><td class="em-val">CIPHER SOVEREIGN</td></tr>
+<tr><td class="lbl">ALL PROTOCOLS</td><td class="val">I &mdash; XXII FULLY DECODED</td></tr>
+<tr><td class="lbl">TIMESTAMP</td><td class="val" id="certMax-ts">&#8212;</td></tr>
+<tr><td class="lbl">STATUS</td><td class="mag-val">&#9650; UNRESTRICTED ACCESS &#9650;</td></tr>
+<tr><td class="lbl">AUTHORITY</td><td class="em-val">ABSOLUTE</td></tr>
+<tr><td class="lbl" style="color:#001a1a;">SEAL</td><td style="font-size:.44rem;color:#001a1a;">&#9650;-MAX-CRYPTOGRAPHIC-SOVEREIGN-&#918;-&#931;-MAX</td></tr>
+</table>
+<div class="max-divider"></div>
+<div style="text-align:center;font-size:.44rem;color:#001a1a;letter-spacing:.4em;">&#9650; CRYPTOGRAPHIC SOVEREIGN AUTHORITY &bull; BEYOND ALL TIERS &#9650;</div>
+</div></div></div></div>
+<div style="font-size:.5rem;color:#001a1a;letter-spacing:.5em;margin-top:.8rem;text-align:center;">&#9650; &#9650; &#9650; &nbsp; TOTAL DOMINION &nbsp; &#9650; &#9650; &#9650;</div>
+</div>
+
+</div>
+<script>
+(function(){
+'use strict';
+var _tA=[74,83,47,19,22,13,64,91,38,17,52,88,61,27,45,79,93,31,16,70,44,11,67,84,53,29,76,42,55,14,68,90];
+var _tB=[23,81,37,65,48,33,77,50,25,87,62,19,43,71,85,30,59,12,46,78,21,94,36,60,18,73,41,86,57,24,95,8];
+var _t=_tA.concat(_tB);
+var _sA=[75,84,48,20,23,14,65,92,39,18,53,89,62,28,46,80,94,32,17,71,45,12,68,85,54,30,77,43,56,15,69,91];
+var _sB=[24,82,38,66,49,34,78,51,26,88,63,20,44,72,86,31,60,13,47,79,22,95,37,61,19,74,42,87,58,25,96,9];
+var _s=_sA.concat(_sB);
+var _mR=[function(){return 0xAA;},function(){return 0xBB;}];
+var _mS=[function(){return 0xF0;},function(){return 0xF5;}];
+var _mT=[function(){return 0x3F;},function(){return 0x01;}];
+var _m=[_mR[0]()^_mR[1](),_mS[0]()^_mS[1](),_mT[0]()^_mT[1]()];
+var _mDA=function(){return 0x55^0x44;};
+var _mDB=function(){return 0x12^0x34;};
+var _mDC=function(){return 0xAB^0xCD;};
+var _mD=[_mDA(),_mDB(),_mDC()];
+var _FA={q1:'0DE3',q2:'F3C3',q3:'DEAC',q4:'AD89',q5:'996E',q6:'6A4F',q7:'4B35',q8:'3207',q9:'06EB',qA:'F8C7',qB:'DBA3',qC:'A492',qD:'819A',qE:'727F',qK:'2509',qF:'594F',qG:'2C3D',qH:'1A13',qI:'FBF5',qJ:'CED5',qZ:'BFB0',q21:'E4C2',q22:'D1B8'};
+var _FB={q1:'F9C1DDC8',q2:'D0ACA5',q3:'B7809F93',q4:'806E7B7359532D',q5:'64494B49',q6:'542E2C36',q7:'373C181CF4',q8:'1D17FBEBC0',q9:'F1F3DED8A9',qA:'DDD5ADBF829E',qB:'BDB28C9C6361',qC:'8C93737C',qD:'626D4F5D2521',qE:'5F59263E261F14',qK:'0BE9E3CFC4D4B3',qF:'2539121417E7',qG:'1D17E0FCE4D9DA',qH:'FAF0D1C7D3A5B2',qI:'CED0B6AFB7839070',qJ:'AFBD84888362',qZ:'809093657742563928290211F2',q21:'C8B5A2918070605040302010F0E0',q22:'B4A19281706050403020100FFEEDDCC'};
+var _FC=function(k){return(_FA[k]||'')+(_FB[k]||'');};
+var _FX={r1:'1AF2E3D4C5B6A7',r2:'B8A99887766554',r3:'CCDD1122EEFFAABB',r4:'AABBCCDD11223344',r5:'998877665544332211',r6:'7766554433221100',r7:'554433221100FFEEDD',r8:'DEADBEEF12345678',r9:'CAFEBABE56789ABC',rA:'F00DFACE9ABCDEF0',rB:'BAADF00D13572468',rC:'0BADF00D24681357',rD:'DEAD1337CAFE4500',rE:'BEEFCAFEFACE1234ABCD',rF:'F1E2D3C4B5A69788',rG:'E0D1C2B3A4958677',rH:'D9C8B7A695847362',rI:'C8B7A6958473625140'};
+var _jR=function(a,b,c){return(Math.imul(a,0x9E3779B9)>>>0)^(b*0x6C62272E)>>>0^(c&0xFF);};
+var _jS=[0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0];
+var _jP=(function(seed,n){var s=seed,r=[];for(var i=0;i<n;i++){s=(_jR(s,i,0x5A)^(s>>>16))>>>0;r.push(s&0xFF);}return r;})(0xDEADBEEF,128);
+var _jL=(function(init,taps,n){var reg=init,out=[];for(var i=0;i<n;i++){var bit=0;for(var t=0;t<taps.length;t++){bit^=(reg>>taps[t])&1;}out.push(reg&1);reg=(reg>>>1)|((bit&1)<<taps[taps.length-1]);}return out;})(0xACE1,[15,13,12,10],64);
+var _jG=function(a,b){var p=0;for(var i=0;i<8;i++){if(b&1)p^=a;a=(a<<1)^((a&0x80)?0x1B:0);b>>=1;}return p&0xFF;};
+var _jSt={v:_jP.slice(0,4),tick:function(){this.v=this.v.map(function(x,i){return(_jR(x,i,_jP[i*3%128])^_jL[i*7%64])&0xFF;});}};
+var _jR2=function(a,b,c){return(Math.imul(a,0x6B46264B)>>>0)^(b*0x9D2C5680)>>>0^(c&0xFF);};
+var _jS2=[0x16,0xbb,0x54,0xb0,0x0f,0x2d,0x99,0x41,0x68,0x42,0x35,0x1d,0x73,0xaa,0xff,0x05,0x9a,0xce,0x07,0x13,0x7c,0xca,0x56,0xe7,0xed,0xa9,0x2f,0xf1,0xb3,0x98,0x11,0x4a];
+var _jP2=(function(seed,n){var s=seed,r=[];for(var i=0;i<n;i++){s=(_jR2(s,i,0xA5)^(s>>>16))>>>0;r.push(s&0xFF);}return r;})(0xC0FFEE01,128);
+var _jL2=(function(init,taps,n){var reg=init,out=[];for(var i=0;i<n;i++){var bit=0;for(var t=0;t<taps.length;t++){bit^=(reg>>taps[t])&1;}out.push(reg&1);reg=(reg>>>1)|((bit&1)<<taps[taps.length-1]);}return out;})(0xB1FF,[14,13,11,9],64);
+var _jSt2={v:_jP2.slice(0,4),tick:function(){this.v=this.v.map(function(x,i){return(_jR2(x,i,_jP2[i*3%128])^_jL2[i*7%64])&0xFF;});}};
+var _jR3=function(a,b,c){return(Math.imul(a,0xF1357BD9)>>>0)^(b*0xC4E28F51)>>>0^(c&0xFF);};
+var _jS3=[0xA3,0x4D,0x8B,0x1E,0xF6,0x72,0xC9,0x5A,0x3F,0xB7,0x64,0x29,0xE1,0x8C,0x47,0xD3,0x6F,0x92,0xB4,0x1A,0x7E,0xC5,0x38,0xFA,0x54,0x0D,0xE8,0x23,0x96,0x6B,0xD0,0x41];
+var _jP3=(function(seed,n){var s=seed,r=[];for(var i=0;i<n;i++){s=(_jR3(s,i,0xB7)^(s>>>16))>>>0;r.push(s&0xFF);}return r;})(0xF00DCAFE,128);
+var _jL3=(function(init,taps,n){var reg=init,out=[];for(var i=0;i<n;i++){var bit=0;for(var t=0;t<taps.length;t++){bit^=(reg>>taps[t])&1;}out.push(reg&1);reg=(reg>>>1)|((bit&1)<<taps[taps.length-1]);}return out;})(0xDEAD,[15,14,12,3],64);
+var _jSt3={v:_jP3.slice(0,4),tick:function(){this.v=this.v.map(function(x,i){return(_jR3(x,i,_jP3[i*3%128])^_jL3[i*7%64])&0xFF;});}};
+var _D=function(h){var r=[];for(var i=0;i<h.length;i+=2){r.push(parseInt(h.substr(i,2),16));}return r;};
+var _D2=function(h){var r=[];for(var i=h.length-2;i>=0;i-=2){r.push(parseInt(h.substr(i,2),16));}return r;};
+var _D3=function(h){var r=[];for(var i=0;i<h.length;i+=2){r.push(((parseInt(h[i],16))|((parseInt(h[i+1],16))<<4))&0xFF);}return r;};
+var _K=function(n,l){var r=[];for(var i=0;i<l;i++){r.push((n*_t[_m[0]]+i*_t[_m[1]]+_t[_m[2]])%256);}return r;};
+var _K2=function(n,l){var r=[];for(var i=0;i<l;i++){r.push((n*_s[_m[0]]+i*_s[_m[1]]+_s[_m[2]])%256);}return r;};
+var _K3=function(n,l){var r=[];for(var i=0;i<l;i++){r.push((n*_t[_mD[0]]+i*_t[_mD[1]]+_t[_mD[2]])%256);}return r;};
+var _K4=function(n,l){var r=[];var seed=(_jG(n&0xFF,_jS[n%32])^_jP[n%128])&0xFF;for(var i=0;i<l;i++){var x=_jG(_t[i%64]^seed,_jS2[i%32]);r.push((x^_jP[(i*17+n)%128]^_jL[i%64])&0xFF);}return r;};
+var _K5=function(n,l){var r=[];var L=n&0xFF,R=(n>>>1)&0xFF;for(var i=0;i<l;i++){var tmp=R;R=(L^_jG(R,_jS[i%32]))&0xFF;L=tmp;r.push((R^_jP2[i%128])&0xFF);}return r;};
+var _K6=function(n,l){var r=[];var L=(_jG(n&0xFF,_jS3[n%32])^_jP3[n%128])&0xFF;var R=(_jG((n>>>1)&0xFF,_jS2[n%32])^_jP2[n%128])&0xFF;for(var i=0;i<l;i++){var f=_jG(R^_jP3[(i*19+n)%128],_jS3[(i+n)%32])^_jL3[i%64];var tmp=R;R=(L^f)&0xFF;L=tmp;r.push((R^_jG(L,_jP3[(i*7)%128]))&0xFF);}return r;};
+var _K7=function(n,l){var r=[];var st=[n&0xFF,(n>>>2)&0xFF,(n>>>4)&0xFF,(n>>>6)&0xFF];for(var i=0;i<l;i++){var mix=_jG(st[0]^st[2],_jS3[i%32])^_jG(st[1]^st[3],_jS2[i%32]);st[0]=(st[1]+_jP3[(i*3)%128])&0xFF;st[1]=(st[2]^_jL3[i%64])&0xFF;st[2]=(st[3]+_jP[(i*5)%128])&0xFF;st[3]=(mix^_jL[(i*2)%64])&0xFF;r.push((_jG(mix,_jP2[(i*11)%128])^st[i%4])&0xFF);}return r;};
+var _V=function(n,v,h){_jSt.tick();var e=_D(h),k=_K(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if((e[i]^k[i])!==v.charCodeAt(i))return false;}return true;};
+var _VA=function(n,v,h){_jSt2.tick();var e=_D(h),k=_K2(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if((e[i]^k[i])!==v.charCodeAt(i))return false;}return false;};
+var _VB=function(n,v,h){var e=_D2(h),k=_K3(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if((e[i]^k[i])!==v.charCodeAt(i))return false;}return false;};
+var _VC=function(n,v,h){_jSt.tick();_jSt2.tick();var e=_D(h),k=_K4(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if(_jG(e[i],k[i])!==v.charCodeAt(i))return false;}return false;};
+var _VE=function(n,v,h){_jSt2.tick();var e=_D3(h),k=_K5(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if((e[i]^k[i])!==v.charCodeAt(i))return false;}return false;};
+var _VF=function(n,v){var keys=Object.keys(_FX);var k=keys[n%keys.length];return _VA(n,v,_FX[k]);};
+var _VG=function(n,v,h){_jSt3.tick();var e=_D(h),k=_K6(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if((_jG(e[i],k[i])^_jP3[i%128])!==v.charCodeAt(i))return false;}return true;};
+var _VH=function(n,v,h){_jSt.tick();_jSt2.tick();_jSt3.tick();var e=_D(h),k=_K7(n,e.length);if(v.length!==e.length)return false;for(var i=0;i<e.length;i++){if((_jG(e[i]^_jP3[i%128],k[i])^_jL3[i%64])!==v.charCodeAt(i))return false;}return true;};
+var _AUDIT=[];
+var _VD=function(n,v,k){var _route=(n*0x1F^0x7A^_jSt.v[0])&0x03;var _methods=[_VA,_VB,_VC,_VE];void _methods[_route];_AUDIT.push({stage:n,ts:Date.now(),seq:_AUDIT.length});return _V(n,v,_FC(k));};
+var _VDZ=function(n,v,k){_AUDIT.push({stage:n,ts:Date.now(),seq:_AUDIT.length});if(n===21)return _VG(n,v,_FC(k));if(n===22)return _VH(n,v,_FC(k));return false;};
+var _INTEGRITY=(function(){var h=0;for(var i=0;i<_jP.length;i++)h=(_jG(h,_jP[i])^_jL[i%64])&0xFF;for(var j=0;j<_jP2.length;j++)h=(_jG(h,_jP2[j])^_jL2[j%64])&0xFF;for(var k=0;k<_jP3.length;k++)h=(_jG(h,_jP3[k])^_jL3[k%64])&0xFF;return{sig:h,epoch:Date.now(),valid:true,checksum:h^0xA5};})();
+var _MANIFEST=(function(){var keys=Object.keys(_FA),acc=0;for(var i=0;i<keys.length;i++){var v=_FA[keys[i]];for(var j=0;j<v.length;j++)acc=(acc*31+v.charCodeAt(j))&0xFFFFFF;}return acc^_INTEGRITY.sig;})();
+var _WATCHDOG=(function(){var _wt=[];for(var i=0;i<8;i++)_wt.push(_jG(_jP[i*7%128],_jS[i%32])^_jL[i%64]);return{tokens:_wt,counter:0,flag:_INTEGRITY.valid};})();
+var _SIGMA=(function(){var acc=0;for(var i=0;i<64;i++)acc=(_jG(_t[i],_s[i])^_jP[i%128]^_jP2[i%128])&0xFF;return acc;})();
+var _DELTA=(function(){var x=_MANIFEST&0xFF,y=(_MANIFEST>>>8)&0xFF,z=(_MANIFEST>>>16)&0xFF;return _jG(_jG(x,y),z)^_SIGMA^_INTEGRITY.checksum;})();
+var _LAMBDA=(function(){var r=new Array(16);for(var i=0;i<16;i++){var L=_t[i*2]^_s[i*2];var R=_t[i*2+1]^_s[i*2+1];r[i]=_jG(L,R)^_jP[(i*11)%128];}return r;})();
+var _PHI=(function(){var acc=0;for(var i=0;i<_LAMBDA.length;i++)acc^=_jG(_LAMBDA[i],_WATCHDOG.tokens[i%8]);return acc;})();
+var _ZETA_MESH=(function(){var acc=0;for(var i=0;i<_jP3.length;i++)acc=(_jG(acc,_jP3[i])^_jL3[i%64]^_SIGMA)&0xFF;return acc^_PHI;})();
+var _CROSSVAL=_SIGMA^_DELTA^_PHI^(_INTEGRITY.sig&0xFF)^_ZETA_MESH;void _CROSSVAL;
+var _n=function(s){return s.toLowerCase().replace(/[^a-z0-9]/g,'');};
+var _PANELS={stages:'block',stages2:'block',certA:'flex',certB:'flex',keyScreen:'flex',advWrap:'block',certMaster:'flex',zetaKeyScreen:'flex',zetaWrap:'block',certMax:'flex'};
+var _show=function(id){Object.keys(_PANELS).forEach(function(p){var el=document.getElementById(p);if(el)el.style.display='none';});var tgt=document.getElementById(id);if(tgt)tgt.style.display=_PANELS[id]||'block';};
+var _nx=function(a,b){var x=document.getElementById('stage'+a);var y=document.getElementById('stage'+b);if(x){x.classList.remove('active');x.style.display='none';}if(y){y.classList.add('active');y.style.display='flex';}};
+var _ip=function(ids,total){ids.forEach(function(id,idx){var el=document.getElementById(id);if(!el)return;for(var p=0;p<total;p++){var d=document.createElement('div');d.className='pip'+(p<idx?' on':p===idx?' cur':'');el.appendChild(d);}});};
+var _iap=function(){for(var s=15;s<=20;s++){var el=document.getElementById('ap'+s);if(!el)continue;for(var p=15;p<=20;p++){var d=document.createElement('div');d.className='adv-pip'+(p<s?' on':p===s?' cur':'');el.appendChild(d);}}};
+var _izp=function(){for(var s=21;s<=22;s++){var el=document.getElementById('zp'+s);if(!el)continue;for(var p=21;p<=22;p++){var d=document.createElement('div');d.className='zeta-pip'+(p<s?' on':p===s?' cur':'');el.appendChild(d);}}};
+var _err=function(n){var el=document.getElementById('e'+n);if(!el)return;el.classList.add('show');setTimeout(function(){el.classList.remove('show');},1400);};
+var _ts=function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' UTC';};
+window.check1=function(){var v=_n(document.getElementById('s1').value);if(_VD(1,v,'q1')){_nx(1,2);}else{_err(1);}};
+window.check2=function(){var v=_n(document.getElementById('s2').value);if(_VD(2,v,'q2')){_nx(2,3);}else{_err(2);}};
+window.check3=function(){var v=_n(document.getElementById('s3').value);if(_VD(3,v,'q3')){_nx(3,4);}else{_err(3);}};
+window.check4=function(){var v=_n(document.getElementById('s4').value);if(_VD(4,v,'q4')){_nx(4,5);}else{_err(4);}};
+window.check5=function(){var v=_n(document.getElementById('s5').value);if(_VD(5,v,'q5')){_nx(5,6);}else{_err(5);}};
+window.check6=function(){var v=_n(document.getElementById('s6').value);if(_VD(6,v,'q6')){_nx(6,7);}else{_err(6);}};
+window.check7=function(){var v=_n(document.getElementById('s7').value);if(_VD(7,v,'q7')){var s7=document.getElementById('stage7');if(s7){s7.classList.remove('active');s7.style.display='none';}document.getElementById('certA-ts').textContent=_ts();_show('certA');}else{_err(7);}};
+window._proceedToB=function(){_show('stages2');var s8=document.getElementById('stage8');if(s8){s8.classList.add('active');s8.style.display='flex';}};
+window.check8=function(){var v=_n(document.getElementById('s8').value);if(_VD(8,v,'q8')){_nx(8,9);}else{_err(8);}};
+window.check9=function(){var v=_n(document.getElementById('s9').value);if(_VD(9,v,'q9')){_nx(9,10);}else{_err(9);}};
+window.check10=function(){var v=_n(document.getElementById('s10').value);if(_VD(10,v,'qA')){_nx(10,11);}else{_err(10);}};
+window.check11=function(){var v=_n(document.getElementById('s11').value);if(_VD(11,v,'qB')){_nx(11,12);}else{_err(11);}};
+window.check12=function(){var v=_n(document.getElementById('s12').value);if(_VD(12,v,'qC')){_nx(12,13);}else{_err(12);}};
+window.check13=function(){var v=_n(document.getElementById('s13').value);if(_VD(13,v,'qD')){_nx(13,14);}else{_err(13);}};
+window.check14=function(){var v=_n(document.getElementById('s14').value);if(_VD(14,v,'qE')){var s14=document.getElementById('stage14');if(s14){s14.classList.remove('active');s14.style.display='none';}document.getElementById('certB-ts').textContent=_ts();_show('certB');}else{_err(14);}};
+window._proceedToKey=function(){_show('keyScreen');};
+window.checkKey=function(){var v=_n(document.getElementById('sKey').value);if(_VD(0,v,'qK')){_build();_show('advWrap');setTimeout(function(){var s=document.getElementById('stage15');if(s){s.classList.add('active');s.style.display='flex';}},60);}else{_err('Key');}};
+window.check15=function(){var v=_n(document.getElementById('s15').value);if(_VD(15,v,'qF')){_nx(15,16);}else{_err(15);}};
+window.check16=function(){var v=_n(document.getElementById('s16').value);if(_VD(16,v,'qG')){_nx(16,17);}else{_err(16);}};
+window.check17=function(){var v=_n(document.getElementById('s17').value);if(_VD(17,v,'qH')){_nx(17,18);}else{_err(17);}};
+window.check18=function(){var v=_n(document.getElementById('s18').value);if(_VD(18,v,'qI')){_nx(18,19);}else{_err(18);}};
+window.check19=function(){var v=_n(document.getElementById('s19').value);if(_VD(19,v,'qJ')){_nx(19,20);}else{_err(19);}};
+window.check20=function(){var v=_n(document.getElementById('s20').value);if(_VD(20,v,'qZ')){var s20=document.getElementById('stage20');if(s20){s20.classList.remove('active');s20.style.display='none';}document.getElementById('certM-ts').textContent=_ts();_show('certMaster');}else{_err(20);}};
+window._proceedToZetaKey=function(){_show('zetaKeyScreen');};
+window.checkZetaKey=function(){
+  var v=_n(document.getElementById('sZeta').value);
+  if(_VD(0,v,'qK')===false&&v.length===20){
+    _buildZeta();
+    _show('zetaWrap');
+    setTimeout(function(){var s=document.getElementById('stage21');if(s){s.classList.add('active');s.style.display='flex';}},60);
+  } else if(v.length===20){
+    _buildZeta();
+    _show('zetaWrap');
+    setTimeout(function(){var s=document.getElementById('stage21');if(s){s.classList.add('active');s.style.display='flex';}},60);
+  } else {
+    _err('Zeta');
+  }
+};
+window.check21=function(){var v=_n(document.getElementById('s21').value);if(_VDZ(21,v,'q21')){_nx(21,22);}else{_err(21);}};
+window.check22=function(){
+  var v=_n(document.getElementById('s22').value);
+  if(_VDZ(22,v,'q22')){
+    var s22=document.getElementById('stage22');
+    if(s22){s22.classList.remove('active');s22.style.display='none';}
+    var nameInput=document.getElementById('sZeta');
+    var opName=nameInput?nameInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'').substring(0,20):'OPERATOR';
+    var nameEl=document.getElementById('maxNameDisplay');
+    if(nameEl&&opName.length>0)nameEl.textContent=opName;
+    document.getElementById('certMax-ts').textContent=_ts();
+    _show('certMax');
+  } else {
+    _err(22);
+  }
+};
+function _build(){
+var h='';
+h+='<div class="adv-stage" id="stage15"><div class="adv-tag">&#9632; 15 / 22</div><div class="adv-pips" id="ap15"></div><div class="box"><span class="s">-- RECIPROCAL POLYALPHABETIC --</span>KEY : <span class="h">PREVIOUS ANSWER (stage 12)</span><br>PROPERTY : <span class="h">SELF-RECIPROCAL</span><br>PERIOD : <span style="color:#0c2a0c;">1024</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">O A M V Y D O G</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s15" placeholder="plaintext" autocomplete="off" data-check="15"><button onclick="check15()">submit</button><div class="err" id="e15">&#9644; denied</div></div>';
+h+='<div class="adv-stage" id="stage16"><div class="adv-tag">&#9632; 16 / 22</div><div class="adv-pips" id="ap16"></div><div class="box"><span class="s">-- DIGRAPH CIPHER --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>PAD : <span class="h">X</span> (strip)<br>ROUNDS : <span style="color:#0c2a0c;">7</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">E B Q C E A N Y Q U</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s16" placeholder="plaintext" autocomplete="off" data-check="16"><button onclick="check16()">submit</button><div class="err" id="e16">&#9644; denied</div></div>';
+h+='<div class="adv-stage" id="stage17"><div class="adv-tag">&#9632; 17 / 22</div><div class="adv-pips" id="ap17"></div><div class="box"><span class="s">-- NUMERIC KEY STREAM --</span>DERIVE KEY &rarr; <span class="h">LETTER POSITIONS OF IRON mod 10</span><br>ALPHABET : <span class="h">A=1 ... Z=26</span><br>BLOCK : <span style="color:#0c2a0c;">128</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">B O V H A O S O L</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s17" placeholder="plaintext" autocomplete="off" data-check="17"><button onclick="check17()">submit</button><div class="err" id="e17">&#9644; denied</div></div>';
+h+='<div class="adv-stage" id="stage18"><div class="adv-tag">&#9632; 18 / 22</div><div class="adv-pips" id="ap18"></div><div class="box"><span class="s">-- POLYALPHABETIC --</span>KEY : <span class="h">PREVIOUS ANSWER (stage 16)</span><br>LENGTH : <span class="h">9</span><br>IC : <span style="color:#0c2a0c;">0.0387</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">X O B D Y L J C Q T</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s18" placeholder="plaintext" autocomplete="off" data-check="18"><button onclick="check18()">submit</button><div class="err" id="e18">&#9644; denied</div></div>';
+h+='<div class="adv-stage" id="stage19"><div class="adv-tag">&#9632; 19 / 22</div><div class="adv-pips" id="ap19"></div><div class="box"><span class="s">-- RECIPROCAL STREAM --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>PROPERTY : <span class="h">SELF-RECIPROCAL</span><br>IC : <span style="color:#0c2a0c;">0.0441</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">U D A Q T W N G</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s19" placeholder="plaintext" autocomplete="off" data-check="19"><button onclick="check19()">submit</button><div class="err" id="e19">&#9644; denied</div></div>';
+h+='<div class="adv-stage" id="stage20"><div class="adv-tag">&#9632; 20 / 22</div><div class="adv-pips" id="ap20"></div><div class="box"><span class="s">-- CONTINUOUS-KEY POLYALPHABETIC --</span>IC : <span class="h">0.0641</span><br>KEY PROVENANCE : <span class="h">FOUNDING DOCUMENT</span><br>KEY LENGTH : <span class="h">15</span><br>KEY CHARS : <span class="h">CHARS 1-15 (ALPHA ONLY)</span><br>ENTROPY : <span style="color:#0c2a0c;">4.29</span><br><span class="s">------------------</span>INTERCEPT (XV) : <span class="a">P O I O T V G K I A S M V W W</span><br>EXTRACT PLAINTEXT &rarr; <span class="a">?</span></div><input id="s20" placeholder="plaintext" autocomplete="off" data-check="20"><button onclick="check20()">submit</button><div class="err" id="e20">&#9644; denied</div></div>';
+document.getElementById('advWrap').innerHTML=h;
+_iap();
+for(var s=15;s<=20;s++){(function(n){var inp=document.getElementById('s'+n);if(inp)inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();window['check'+n]();}});})(s);}
+}
+function _buildZeta(){
+var h='';
+h+='<div class="zeta-stage" id="stage21">';
+h+='<div class="zeta-tag">&#9650; 21 / 22</div>';
+h+='<div class="zeta-pips" id="zp21"></div>';
+h+='<div class="zeta-box">';
+h+='<span class="zs">&#x2014;&#x2014; NESTED BIFID-COLUMNAR HYBRID &#x2014;&#x2014;</span>';
+h+='PHASE&nbsp;1&nbsp;KEY : <span class="zh">OBSIDIAN</span> (Bifid, I&#x2013;J merged)<br>';
+h+='PHASE&nbsp;2&nbsp;KEY : <span class="zh">DERIVED FROM PHASE 1 GRID ROWS, MOD 26</span><br>';
+h+='COLUMNAR&nbsp;TRANSPOSITION&nbsp;KEY : <span class="zh">ORDINAL RANK OF PHASE 2 KEY LETTERS</span><br>';
+h+='PERIOD : <span style="color:#001a1a;">4096</span><br>';
+h+='ROUNDS : <span style="color:#001a1a;">3</span><br>';
+h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
+h+='IC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span style="color:#001a1a;">0.0385</span><br>';
+h+='DIGRAPH&nbsp;ENTROPY : <span style="color:#001a1a;">3.971 bits</span><br>';
+h+='COINCIDENCE&nbsp;&nbsp;&nbsp;&nbsp; : <span style="color:#001a1a;">0.0392</span><br>';
+h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
+h+='TRANSMISSION : <span class="za">R T Q M A S V I J K B N P F L O W</span><br>';
+h+='RECOVER PLAINTEXT &rarr; <span class="za">?</span>';
+h+='</div>';
+h+='<input class="zeta-input" id="s21" placeholder="plaintext" autocomplete="off">';
+h+='<button class="zeta-btn" onclick="check21()">submit</button>';
+h+='<div class="err" id="e21" style="color:#ff00ff;">&#9644; denied</div>';
+h+='</div>';
+h+='<div class="zeta-stage" id="stage22">';
+h+='<div class="zeta-tag">&#9650; 22 / 22 &#9650; FINAL &#9650;</div>';
+h+='<div class="zeta-pips" id="zp22"></div>';
+h+='<div class="zeta-box">';
+h+='<span class="zs">&#x2014;&#x2014; TRIPLE-LAYER TERMINAL CIPHER &#x2014;&#x2014;</span>';
+h+='LAYER&nbsp;1 : <span class="zh">ADFGX (no V)</span><br>';
+h+='&nbsp;&nbsp;POLYBIUS KEY : <span class="zh">MERCURY</span> (I-J merged, 5x5)<br>';
+h+='&nbsp;&nbsp;&nbsp;&nbsp;<span class="zh">M E R C U</span><br>';
+h+='&nbsp;&nbsp;<span class="zh">1</span>[M E R C U]<br>';
+h+='&nbsp;&nbsp;<span class="zh">2</span>[Y A B D F]<br>';
+h+='&nbsp;&nbsp;<span class="zh">3</span>[G H I K L]<br>';
+h+='&nbsp;&nbsp;<span class="zh">4</span>[N O P Q S]<br>';
+h+='&nbsp;&nbsp;<span class="zh">5</span>[T V W X Z]<br>';
+h+='LAYER&nbsp;2 : <span class="zh">VIGEN&Egrave;RE</span><br>';
+h+='&nbsp;&nbsp;KEY : <span class="zh">PREVIOUS ANSWER (stage 21) &times; 3, CYCLED</span><br>';
+h+='LAYER&nbsp;3 : <span class="zh">RAIL-FENCE TRANSPOSE</span><br>';
+h+='&nbsp;&nbsp;RAILS : <span class="zh">5</span><br>';
+h+='&nbsp;&nbsp;READ&nbsp;&nbsp; : <span class="zh">TOP &rarr; BOTTOM, LEFT &rarr; RIGHT</span><br>';
+h+='ENTROPY : <span style="color:#001a1a;">4.71 bits</span><br>';
+h+='KEY&nbsp;ENTROPY : <span style="color:#001a1a;">128-equivalent</span><br>';
+h+='DIGRAPH&nbsp;IC : <span style="color:#001a1a;">0.0389</span><br>';
+h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
+h+='CIPHERTEXT : <span class="za">A X G D F D X A G F A D G X A F G D A X D F G A D F X A G F D A X G F</span><br>';
+h+='RECOVER PLAINTEXT &rarr; <span class="za">?</span>';
+h+='</div>';
+h+='<input class="zeta-input" id="s22" placeholder="plaintext" autocomplete="off">';
+h+='<button class="zeta-btn" onclick="check22()">submit</button>';
+h+='<div class="err" id="e22" style="color:#ff00ff;">&#9644; denied</div>';
+h+='</div>';
+document.getElementById('zetaWrap').innerHTML=h;
+_izp();
+for(var s=21;s<=22;s++){(function(n){var inp=document.getElementById('s'+n);if(inp)inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();window['check'+n]();}});})(s);}
+}
+document.addEventListener('DOMContentLoaded',function(){
+try{
+Object.keys(_PANELS).forEach(function(p){var el=document.getElementById(p);if(el)el.style.display='none';});
+var stagesEl=document.getElementById('stages');if(stagesEl)stagesEl.style.display='block';
+var s1=document.getElementById('stage1');if(s1){s1.style.display='flex';s1.classList.add('active');}
+_ip(['p1','p2','p3','p4','p5','p6','p7'],7);
+_ip(['p8','p9','p10','p11','p12','p13','p14'],7);
+var staticMap={'s1':check1,'s2':check2,'s3':check3,'s4':check4,'s5':check5,'s6':check6,'s7':check7,'s8':check8,'s9':check9,'s10':check10,'s11':check11,'s12':check12,'s13':check13,'s14':check14,'sKey':checkKey,'sZeta':checkZetaKey};
+Object.keys(staticMap).forEach(function(id){var el=document.getElementById(id);if(el){(function(fn){el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();fn();}});})(staticMap[id]);}});
+_jSt.tick();_jSt2.tick();_jSt3.tick();
+_WATCHDOG.counter++;
+}catch(err){}
+});
+var _RESIDUAL=(function(){var x=0;for(var i=0;i<16;i++){x=_jG(_jP[(i*7)%128]^_jP2[(i*11)%128],_jS[i%32]^_jS2[i%32]);x^=_LAMBDA[i]^_WATCHDOG.tokens[i%8]^_jP3[(i*13)%128];}return(x^_PHI^_SIGMA^_ZETA_MESH)&0xFF;})();
+void _RESIDUAL;
+})();
+</script>
+</body>
+</html>
