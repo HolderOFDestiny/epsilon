@@ -129,10 +129,10 @@ export default {
     }
 
     const url = new URL(request.url);
-    if (request.method !== 'POST' || url.pathname !== '/check') {
-      return new Response(JSON.stringify({ ok: false }), {
-        status: 404, headers: corsHeaders(origin),
-      });
+
+    // Serve static files (index.html etc) for everything except /check
+    if (url.pathname !== '/check') {
+      return env.ASSETS.fetch(request);
     }
 
     const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
