@@ -6,7 +6,7 @@
 <title>&#8709;</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--fg:#0f0;--dim:#1a3d1a;--mid:#2a7a2a;--acc:#ff0;--red:#c00;--gold:#cc9900;--gold2:#ffcc00;--plat:#e8e8e8;}
+:root{--bg:#000;--fg:#0f0;--dim:#1a3d1a;--mid:#2a7a2a;--acc:#ff0;--red:#c00;--gold:#cc9900;--plat:#e8e8e8;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--fg);font-family:'Share Tech Mono',monospace;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
 #wrap{width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;}
@@ -70,15 +70,12 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 .zeta-input:focus{border-color:#00ffff;}
 .zeta-btn{background:transparent;border:1px solid #001a1a;color:#001a1a;padding:.45rem 2rem;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;font-size:.72rem;text-transform:uppercase;transition:all .2s;}
 .zeta-btn:hover{border-color:#00ffff;color:#00ffff;}.zeta-btn:disabled{opacity:.3;cursor:not-allowed;}
-/* MAX CLEARANCE */
 #certMax{max-width:580px;}
-.max-frame{position:relative;width:100%;padding:.3rem;background:linear-gradient(135deg,#000 0%,#0a0a0a 50%,#000 100%);}
-.max-border-outer{border:2px solid #00ffff;padding:.3rem;position:relative;}
-.max-border-mid{border:1px solid #ff00ff;padding:.2rem;position:relative;}
-.max-border-inner{border:1px solid #00ffff;padding:1.6rem 1.4rem;background:#000;position:relative;}
-/* Triforce container */
+.max-frame{width:100%;padding:.3rem;background:linear-gradient(135deg,#000 0%,#0a0a0a 50%,#000 100%);}
+.max-border-outer{border:2px solid #00ffff;padding:.3rem;}
+.max-border-mid{border:1px solid #ff00ff;padding:.2rem;}
+.max-border-inner{border:1px solid #00ffff;padding:1.6rem 1.4rem;background:#000;}
 .max-tri-container{display:flex;justify-content:center;margin:.8rem 0;}
-.max-tri-container svg{filter:drop-shadow(0 0 8px #00ffff) drop-shadow(0 0 16px #ff00ff);}
 @keyframes tri-pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
 @keyframes tri-pulse2{0%,100%{opacity:.9;}50%{opacity:.45;}}
 @keyframes tri-glow{0%,100%{filter:drop-shadow(0 0 8px #00ffff) drop-shadow(0 0 16px #ff00ff);}50%{filter:drop-shadow(0 0 14px #00ffff) drop-shadow(0 0 28px #ff00ff);}}
@@ -100,14 +97,11 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 .zeta-key-box .zkh{color:#00ffff;}.zeta-key-box .zka{color:#ff00ff;}
 .pending{color:var(--acc);font-size:.6rem;letter-spacing:.3em;opacity:0;transition:opacity .15s;text-transform:uppercase;}
 .pending.show{opacity:1;}
-/* Name entry on MAX cert */
 .max-name-entry{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin:.6rem 0;}
 .max-name-entry label{font-size:.55rem;color:#004444;letter-spacing:.4em;text-transform:uppercase;}
 .max-name-input{background:transparent;border:none;border-bottom:1px solid #004444;color:#00ffff;font-size:.9rem;padding:.3rem .5rem;text-align:center;outline:none;width:220px;font-family:'Cinzel',serif;letter-spacing:.3em;}
 .max-name-input:focus{border-color:#00ffff;}
 .max-name-input::placeholder{color:#002222;font-size:.6rem;font-family:'Share Tech Mono',monospace;letter-spacing:.1em;}
-.max-name-btn{background:transparent;border:1px solid #003333;color:#003333;padding:.3rem 1.4rem;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:.2em;font-size:.6rem;text-transform:uppercase;transition:all .2s;}
-.max-name-btn:hover{border-color:#00ffff;color:#00ffff;}
 </style>
 </head>
 <body>
@@ -116,13 +110,76 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 
 <!-- PHASE 1: Stages 1-7 -->
 <div id="stages" class="panel-active">
-<div class="stage active" id="stage1"><div class="tag">&#9632; 01 / 22</div><div class="pips" id="p1"></div><div class="box"><span class="s">-- INTERCEPT LOG --</span>RAILS : <span class="h">3</span><br>SEQUENCE : <span style="color:#0c2a0c;">0x1F 0x7A 0x3C</span><br>AMPLITUDE : <span style="color:#0c2a0c;">440 Hz</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>TRANSMISSION : <span class="a">S O H D W A</span><br>RECOVER PLAINTEXT &rarr; <span class="a">?</span></div><input id="s1" placeholder="plaintext" autocomplete="off"><button id="b1" onclick="submit(1)">submit</button><div class="pending" id="w1">&#9632; verifying</div><div class="err" id="e1">&#9644; denied</div></div>
-<div class="stage" id="stage2"><div class="tag">&#9632; 02 / 22</div><div class="pips" id="p2"></div><div class="box"><span class="s">-- MIRROR PROTOCOL --</span>AXIS : <span class="h">SYMMETRIC</span><br>OFFSET : <span style="color:#0c2a0c;">17</span><br>PERIOD : <span style="color:#0c2a0c;">26</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">M R T S G</span><br>RESTORE PLAINTEXT &rarr; <span class="a">?</span></div><input id="s2" placeholder="plaintext" autocomplete="off"><button id="b2" onclick="submit(2)">submit</button><div class="pending" id="w2">&#9632; verifying</div><div class="err" id="e2">&#9644; denied</div></div>
-<div class="stage" id="stage3"><div class="tag">&#9632; 03 / 22</div><div class="pips" id="p3"></div><div class="box"><span class="s">-- SHIFT REGISTER --</span>DERIVE KEY &rarr; <span class="h">VOWELS IN : COORDINATES</span><br>MODULUS : <span style="color:#0c2a0c;">97</span><br>IC : <span style="color:#0c2a0c;">0.0654</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">G J F H T S</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s3" placeholder="plaintext" autocomplete="off"><button id="b3" onclick="submit(3)">submit</button><div class="pending" id="w3">&#9632; verifying</div><div class="err" id="e3">&#9644; denied</div></div>
-<div class="stage" id="stage4"><div class="tag">&#9632; 04 / 22</div><div class="pips" id="p4"></div><div class="box"><span class="s">-- GRID TRANSPOSITION --</span>KEY : <span class="h">PRISM</span><br>DIMENSIONS : <span class="h">2 &times; 5</span><br>PAD CHAR : <span class="h">X</span> (strip on decode)<br>ENTROPY : <span style="color:#0c2a0c;">0xAF 0x3B</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">U E T X V O A P L N</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s4" placeholder="plaintext" autocomplete="off"><button id="b4" onclick="submit(4)">submit</button><div class="pending" id="w4">&#9632; verifying</div><div class="err" id="e4">&#9644; denied</div></div>
-<div class="stage" id="stage5"><div class="tag">&#9632; 05 / 22</div><div class="pips" id="p5"></div><div class="box"><span class="s">-- COORDINATE MAP --</span>KEY-WORD : <span class="h">FORGE</span> | I&#8211;J MERGED<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>&nbsp;&nbsp;<span class="h">1 2 3 4 5</span><br><span class="h">1</span>[F O R G E]<br><span class="h">2</span>[A B C D H]<br><span class="h">3</span>[I K L M N]<br><span class="h">4</span>[P Q S T U]<br><span class="h">5</span>[V W X Y Z]<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>FREQ : <span style="color:#0c2a0c;">0.067 0.041 0.038</span><br>COORDS : <span class="a">23 31 41 25 15 13</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s5" placeholder="plaintext" autocomplete="off"><button id="b5" onclick="submit(5)">submit</button><div class="pending" id="w5">&#9632; verifying</div><div class="err" id="e5">&#9644; denied</div></div>
-<div class="stage" id="stage6"><div class="tag">&#9632; 06 / 22</div><div class="pips" id="p6"></div><div class="box"><span class="s">-- RECIPROCAL STREAM --</span>DERIVE KEY &rarr; <span class="h">FIRST LETTERS OF EACH LINE :</span><br>&nbsp;&nbsp;<span class="h">Kingdoms rise on coded ground</span><br>&nbsp;&nbsp;<span class="h">Every wall a written wound</span><br>&nbsp;&nbsp;<span class="h">Yet silence speaks the sharpest sound</span><br>HASH : <span style="color:#0c2a0c;">0x5F2A</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">S W S X E N</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s6" placeholder="plaintext" autocomplete="off"><button id="b6" onclick="submit(6)">submit</button><div class="pending" id="w6">&#9632; verifying</div><div class="err" id="e6">&#9644; denied</div></div>
-<div class="stage" id="stage7"><div class="tag">&#9632; 07 / 22</div><div class="pips" id="p7"></div><div class="box"><span class="s">-- DIGRAPH SUBSTITUTION --</span>DERIVE KEY &rarr; <span class="h">LETTERS AT POSITIONS 2,5,1,4,3</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IN : <span class="h">TRANCE</span><br>PAD CHAR : <span class="h">X</span> (strip on decode)<br>BLOCK LEN : <span style="color:#0c2a0c;">64</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>CIPHERTEXT : <span class="a">U Q D T E K T V</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s7" placeholder="plaintext" autocomplete="off"><button id="b7" onclick="submit(7)">submit</button><div class="pending" id="w7">&#9632; verifying</div><div class="err" id="e7">&#9644; denied</div></div>
+
+<!-- S1: shadow → Playfair(KRYPTOS) = CEOFAU -->
+<div class="stage active" id="stage1">
+<div class="tag">&#9632; 01 / 22</div><div class="pips" id="p1"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>C E O F A U<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s1" placeholder="plaintext" autocomplete="off">
+<button id="b1" onclick="submit(1)">submit</button>
+<div class="pending" id="w1">&#9632; verifying</div>
+<div class="err" id="e1">&#9644; denied</div>
+</div>
+
+<!-- S2: night → Nihilist(CICADA) = 44 24 34 37 58 -->
+<div class="stage" id="stage2">
+<div class="tag">&#9632; 02 / 22</div><div class="pips" id="p2"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>44 &nbsp; 24 &nbsp; 34 &nbsp; 37 &nbsp; 58<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s2" placeholder="plaintext" autocomplete="off">
+<button id="b2" onclick="submit(2)">submit</button>
+<div class="pending" id="w2">&#9632; verifying</div>
+<div class="err" id="e2">&#9644; denied</div>
+</div>
+
+<!-- S3: beacon → FourSquare(LEOPARD,PANTHER) = AAOPIK -->
+<div class="stage" id="stage3">
+<div class="tag">&#9632; 03 / 22</div><div class="pips" id="p3"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>A A O P I K<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s3" placeholder="plaintext" autocomplete="off">
+<button id="b3" onclick="submit(3)">submit</button>
+<div class="pending" id="w3">&#9632; verifying</div>
+<div class="err" id="e3">&#9644; denied</div>
+</div>
+
+<!-- S4: vaultopen → Bifid(ENIGMA, period=4) = WSEXSHTVN -->
+<div class="stage" id="stage4">
+<div class="tag">&#9632; 04 / 22</div><div class="pips" id="p4"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>W S E X S H T V N<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s4" placeholder="plaintext" autocomplete="off">
+<button id="b4" onclick="submit(4)">submit</button>
+<div class="pending" id="w4">&#9632; verifying</div>
+<div class="err" id="e4">&#9644; denied</div>
+</div>
+
+<!-- S5: cipher → Nihilist(ZODIAC) = 32 26 54 45 38 64 -->
+<div class="stage" id="stage5">
+<div class="tag">&#9632; 05 / 22</div><div class="pips" id="p5"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>32 &nbsp; 26 &nbsp; 54 &nbsp; 45 &nbsp; 38 &nbsp; 64<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s5" placeholder="plaintext" autocomplete="off">
+<button id="b5" onclick="submit(5)">submit</button>
+<div class="pending" id="w5">&#9632; verifying</div>
+<div class="err" id="e5">&#9644; denied</div>
+</div>
+
+<!-- S6: signal → Beaufort(SPECTER) = AHYPTT -->
+<div class="stage" id="stage6">
+<div class="tag">&#9632; 06 / 22</div><div class="pips" id="p6"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>A H Y P T T<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s6" placeholder="plaintext" autocomplete="off">
+<button id="b6" onclick="submit(6)">submit</button>
+<div class="pending" id="w6">&#9632; verifying</div>
+<div class="err" id="e6">&#9644; denied</div>
+</div>
+
+<!-- S7: specter → Beaufort(PHANTOM) = XSWLAKV -->
+<div class="stage" id="stage7">
+<div class="tag">&#9632; 07 / 22</div><div class="pips" id="p7"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>X S W L A K V<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s7" placeholder="plaintext" autocomplete="off">
+<button id="b7" onclick="submit(7)">submit</button>
+<div class="pending" id="w7">&#9632; verifying</div>
+<div class="err" id="e7">&#9644; denied</div>
+</div>
 </div>
 
 <!-- CERT A -->
@@ -146,13 +203,76 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 
 <!-- PHASE 2: Stages 8-14 -->
 <div id="stages2">
-<div class="stage active" id="stage8"><div class="tag">&#9632; 08 / 22</div><div class="pips" id="p8"></div><div class="box"><span class="s">-- FRACTIONATION --</span>KEY-SQUARE : <span class="h">SPHINX</span> (I&#8211;J merged)<br>PERIOD : <span class="h">7</span><br>&nbsp;&nbsp;<span class="h">S P H I N</span><br>&nbsp;&nbsp;<span class="h">X A B C D</span><br>&nbsp;&nbsp;<span class="h">E F G K L</span><br>&nbsp;&nbsp;<span class="h">M O Q R T</span><br>&nbsp;&nbsp;<span class="h">U V W Y Z</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>ENTROPY : <span style="color:#0c2a0c;">1.847 bits</span><br>FRACTIONATED : <span class="a">F E S E T O S</span><br>RECOVER PLAINTEXT &rarr; <span class="a">?</span></div><input id="s8" placeholder="plaintext" autocomplete="off"><button id="b8" onclick="submit(8)">submit</button><div class="pending" id="w8">&#9632; verifying</div><div class="err" id="e8">&#9644; denied</div></div>
-<div class="stage" id="stage9"><div class="tag">&#9632; 09 / 22</div><div class="pips" id="p9"></div><div class="box"><span class="s">-- ADDITIVE COORDINATE CIPHER --</span>POLYBIUS KEY : <span class="h">TRAITOR</span> (I&#8211;J merged)<br>ADDITIVE KEY : <span class="h">PREVIOUS ANSWER</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="h">1 2 3 4 5</span><br><span class="h">1</span>[T R A I O]<br><span class="h">2</span>[B C D E F]<br><span class="h">3</span>[G H K L M]<br><span class="h">4</span>[N P Q S U]<br><span class="h">5</span>[V W X Y Z]<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>IC : <span style="color:#0c2a0c;">0.0412</span><br>TRANSMISSION : <span class="a">66 54 47 55 53 59 59</span><br>RESTORE PLAINTEXT &rarr; <span class="a">?</span></div><input id="s9" placeholder="plaintext" autocomplete="off"><button id="b9" onclick="submit(9)">submit</button><div class="pending" id="w9">&#9632; verifying</div><div class="err" id="e9">&#9644; denied</div></div>
-<div class="stage" id="stage10"><div class="tag">&#9632; 10 / 22</div><div class="pips" id="p10"></div><div class="box"><span class="s">-- POLYALPHABETIC --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>LENGTH : <span class="h">7</span><br>IC : <span style="color:#0c2a0c;">0.0440</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT : <span class="a">B L R V W W M C</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s10" placeholder="plaintext" autocomplete="off"><button id="b10" onclick="submit(10)">submit</button><div class="pending" id="w10">&#9632; verifying</div><div class="err" id="e10">&#9644; denied</div></div>
-<div class="stage" id="stage11"><div class="tag">&#9632; 11 / 22</div><div class="pips" id="p11"></div><div class="box"><span class="s">-- ADFGVX ENCODING --</span>KEYWORD : <span class="h">PREVIOUS ANSWER</span> (first 7 unique letters)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="h">A D F G V X</span><br><span class="h">A</span>[M E R I D A]<br><span class="h">D</span>[N B C F G H]<br><span class="h">F</span>[K L O P Q S]<br><span class="h">G</span>[T U V W X Y]<br><span class="h">V</span>[Z . . . . .]<br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>WEIGHT : <span style="color:#0c2a0c;">0.731</span><br>MSG : <span class="a">FF DD FX AG AV AG AX DA</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s11" placeholder="plaintext" autocomplete="off"><button id="b11" onclick="submit(11)">submit</button><div class="pending" id="w11">&#9632; verifying</div><div class="err" id="e11">&#9644; denied</div></div>
-<div class="stage" id="stage12"><div class="tag">&#9632; 12 / 22</div><div class="pips" id="p12"></div><div class="box"><span class="s">-- SYMBOL SUBSTITUTION --</span>ALPHABET : <span class="h">TWO-SYMBOL (A-B)</span><br>DERIVE SHIFT &rarr; <span class="h">COUNT Ls IN : NULL</span><br>SEED : <span style="color:#0c2a0c;">0xDEAD</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span><span class="a">DCBCC DCCCC CCCCC CDCCC DCCDC CCDDD</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s12" placeholder="plaintext" autocomplete="off"><button id="b12" onclick="submit(12)">submit</button><div class="pending" id="w12">&#9632; verifying</div><div class="err" id="e12">&#9644; denied</div></div>
-<div class="stage" id="stage13"><div class="tag">&#9632; 13 / 22</div><div class="pips" id="p13"></div><div class="box"><span class="s">-- CONTINUOUS-KEY POLYALPHABETIC --</span>IC : <span class="h">0.0654</span><br>KEY PROVENANCE : <span class="h">FOUNDING DOCUMENT</span><br>KEY LENGTH : <span class="h">8</span><br>KEY CHARS : <span class="h">CHARS 1-8 (ALPHA ONLY)</span><br>ENTROPY : <span style="color:#0c2a0c;">3.12</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>INTERCEPT (VIII) : <span class="a">O I G A M C I Z</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s13" placeholder="plaintext" autocomplete="off"><button id="b13" onclick="submit(13)">submit</button><div class="pending" id="w13">&#9632; verifying</div><div class="err" id="e13">&#9644; denied</div></div>
-<div class="stage" id="stage14"><div class="tag">&#9632; 14 / 22</div><div class="pips" id="p14"></div><div class="box"><span class="s">-- PLAYFAIR --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>PAD CHAR : <span class="h">X</span> (strip on decode)<br>I-J MERGED : <span class="h">YES</span><br>BLOCK : <span style="color:#0c2a0c;">512</span><br><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>CIPHERTEXT : <span class="a">E B Q C E A N Y Q U</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s14" placeholder="plaintext" autocomplete="off"><button id="b14" onclick="submit(14)">submit</button><div class="pending" id="w14">&#9632; verifying</div><div class="err" id="e14">&#9644; denied</div></div>
+
+<!-- S8: eclipse → FourSquare(DARKSIDE,VORTEX) = REMXLQRZ  (8 chars, even) -->
+<div class="stage active" id="stage8">
+<div class="tag">&#9632; 08 / 22</div><div class="pips" id="p8"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>R E M X L Q R Z<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s8" placeholder="plaintext" autocomplete="off">
+<button id="b8" onclick="submit(8)">submit</button>
+<div class="pending" id="w8">&#9632; verifying</div>
+<div class="err" id="e8">&#9644; denied</div>
+</div>
+
+<!-- S9: phantom → Bifid(SHADOW, period=3) = NHCRSZM -->
+<div class="stage" id="stage9">
+<div class="tag">&#9632; 09 / 22</div><div class="pips" id="p9"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>N H C R S Z M<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s9" placeholder="plaintext" autocomplete="off">
+<button id="b9" onclick="submit(9)">submit</button>
+<div class="pending" id="w9">&#9632; verifying</div>
+<div class="err" id="e9">&#9644; denied</div>
+</div>
+
+<!-- S10: meridian → Myszkowski(CIPHER) = MADIENRI -->
+<div class="stage" id="stage10">
+<div class="tag">&#9632; 10 / 22</div><div class="pips" id="p10"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>M A D I E N R I<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s10" placeholder="plaintext" autocomplete="off">
+<button id="b10" onclick="submit(10)">submit</button>
+<div class="pending" id="w10">&#9632; verifying</div>
+<div class="err" id="e10">&#9644; denied</div>
+</div>
+
+<!-- S11: obsidian → Playfair(WRAITH) = VGQTLDWP -->
+<div class="stage" id="stage11">
+<div class="tag">&#9632; 11 / 22</div><div class="pips" id="p11"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>V G Q T L D W P<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s11" placeholder="plaintext" autocomplete="off">
+<button id="b11" onclick="submit(11)">submit</button>
+<div class="pending" id="w11">&#9632; verifying</div>
+<div class="err" id="e11">&#9644; denied</div>
+</div>
+
+<!-- S12: wraith → FourSquare(ABYSS,VORTEX) = VMSXQC -->
+<div class="stage" id="stage12">
+<div class="tag">&#9632; 12 / 22</div><div class="pips" id="p12"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>V M S X Q C<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s12" placeholder="plaintext" autocomplete="off">
+<button id="b12" onclick="submit(12)">submit</button>
+<div class="pending" id="w12">&#9632; verifying</div>
+<div class="err" id="e12">&#9644; denied</div>
+</div>
+
+<!-- S13: sentinel → Nihilist(PHANTOM) = 55 43 27 29 49 35 53 52 -->
+<div class="stage" id="stage13">
+<div class="tag">&#9632; 13 / 22</div><div class="pips" id="p13"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>55 &nbsp; 43 &nbsp; 27 &nbsp; 29 &nbsp; 49 &nbsp; 35 &nbsp; 53 &nbsp; 52<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s13" placeholder="plaintext" autocomplete="off">
+<button id="b13" onclick="submit(13)">submit</button>
+<div class="pending" id="w13">&#9632; verifying</div>
+<div class="err" id="e13">&#9644; denied</div>
+</div>
+
+<!-- S14: cataclysm → DoubleColumnar(ABYSS,DEPTHS) = CCLTAASMY -->
+<div class="stage" id="stage14">
+<div class="tag">&#9632; 14 / 22</div><div class="pips" id="p14"></div>
+<div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>C C L T A A S M Y<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div>
+<input id="s14" placeholder="plaintext" autocomplete="off">
+<button id="b14" onclick="submit(14)">submit</button>
+<div class="pending" id="w14">&#9632; verifying</div>
+<div class="err" id="e14">&#9644; denied</div>
+</div>
 </div>
 
 <!-- CERT B -->
@@ -187,7 +307,7 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 <!-- ADV STAGES 15-20 -->
 <div id="advWrap"></div>
 
-<!-- CERT MASTER (ZETA) -->
+<!-- CERT MASTER -->
 <div id="certMaster">
 <div class="tag">&#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &nbsp; ZETA CLEARANCE &nbsp; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632; &#9632;</div>
 <div style="height:1px;width:100%;background:linear-gradient(90deg,transparent,#cc9900,transparent);"></div>
@@ -210,58 +330,42 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 <!-- ZETA KEY SCREEN -->
 <div id="zetaKeyScreen">
 <div class="zeta-tag">&#9632; &#9632; &#9632; &#9632; &nbsp; BEYOND ZETA &nbsp; &#9632; &#9632; &#9632; &#9632;</div>
-<div class="zeta-key-box">CLASSIFICATION : <span class="zkh">BEYOND-CLASSIFICATION</span><br>DERIVATION : <span class="zka">FIRST LETTER OF EVERY ANSWER &mdash; ALL 20</span><br><span style="color:#001a1a;">Concatenate the first letter of each stage answer (1&ndash;20) in order and submit below.</span><br>KEY ENTRY &rarr; <span class="zka">?</span></div>
+<div class="zeta-key-box">CLASSIFICATION : <span class="zkh">BEYOND-CLASSIFICATION</span><br>DERIVATION : <span class="zka">FIRST LETTER OF EVERY ANSWER &mdash; ALL 20</span><br><span style="color:#001a1a;">Concatenate the first letter of each stage answer (1&ndash;20) in order.</span><br>KEY ENTRY &rarr; <span class="zka">?</span></div>
 <input class="zeta-input" id="sZeta" placeholder="master key" autocomplete="off">
 <button class="zeta-btn" id="bZeta" onclick="submitZetaKey()">authenticate</button>
 <div class="pending" id="wZeta" style="color:#00ffff;">&#9632; verifying</div>
 <div class="err" id="eZeta" style="color:#ff00ff;">&#9644; key rejected</div>
 </div>
 
-<!-- ZETA STAGES 21-22 -->
+<!-- ZETA STAGES 21-22 (dynamically built) -->
 <div id="zetaWrap"></div>
 
 <!-- MAX CLEARANCE CERTIFICATE -->
 <div id="certMax">
-<div class="zeta-tag" style="letter-spacing:.7em;color:#001a1a;">&#9650; &#9650; &#9650; &nbsp; MAXIMUM CLEARANCE ACHIEVED &nbsp; &#9650; &#9650; &#9650;</div>
+<div class="zeta-tag" style="letter-spacing:.7em;color:#001a1a;">&#9650; &#9650; &#9650; &nbsp; MAXIMUM CLEARANCE &nbsp; &#9650; &#9650; &#9650;</div>
 <div class="max-divider" style="width:100%;"></div>
 <div class="max-frame" style="width:100%;">
 <div class="max-border-outer"><div class="max-border-mid"><div class="max-border-inner">
-
-<!-- TRIFORCE — 4 triangles arranged as a larger triangle (3 bottom + 1 top) -->
 <div class="max-tri-container">
 <svg width="180" height="160" viewBox="0 0 180 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Bottom-left triangle -->
   <polygon class="tri-bl" points="10,150 55,70 100,150" stroke="#00ffff" stroke-width="1.5" fill="rgba(0,255,255,0.04)"/>
-  <!-- Bottom-right triangle -->
   <polygon class="tri-br" points="80,150 125,70 170,150" stroke="#ff00ff" stroke-width="1.5" fill="rgba(255,0,255,0.04)"/>
-  <!-- Top triangle -->
   <polygon class="tri-tl" points="45,68 90,0 135,68" stroke="#00ffff" stroke-width="1.5" fill="rgba(0,255,255,0.06)"/>
-  <!-- Centre void triangle (inverted, negative space — the Triforce gap) -->
   <polygon class="tri-tr" points="55,70 125,70 90,5" stroke="#ff00ff" stroke-width=".8" fill="rgba(0,0,0,0.9)" opacity=".85"/>
-  <!-- Corner glow dots -->
   <circle cx="90" cy="2" r="2" fill="#00ffff" opacity=".9"/>
   <circle cx="10" cy="151" r="2" fill="#ff00ff" opacity=".9"/>
   <circle cx="170" cy="151" r="2" fill="#ff00ff" opacity=".9"/>
 </svg>
 </div>
-
-<!-- Name entry -->
 <div class="max-name-entry">
   <label>&#9650; enter your designation &#9650;</label>
   <input class="max-name-input" id="maxNameInput" placeholder="your name or callsign" maxlength="24" autocomplete="off" oninput="updateMaxName()">
 </div>
-
 <div class="max-name" id="maxNameDisplay">CIPHER SOVEREIGN</div>
-<div style="display:block;text-align:center;">
-  <span class="max-rank">MAX CLEARANCE</span>
-</div>
-
+<div style="display:block;text-align:center;"><span class="max-rank">MAX CLEARANCE</span></div>
 <div class="max-divider"></div>
-
 <table class="max-table">
-<tr><td colspan="2" style="text-align:center;padding:.7rem;background:#000;border-color:#001a1a;">
-  <span class="max-title">&#9650; Certificate of Absolute Authority &#9650;</span>
-</td></tr>
+<tr><td colspan="2" style="text-align:center;padding:.7rem;background:#000;border-color:#001a1a;"><span class="max-title">&#9650; Certificate of Absolute Authority &#9650;</span></td></tr>
 <tr><td class="lbl">CLEARANCE TIER</td><td class="mag-val">&#9650; MAXIMUM &#9650;</td></tr>
 <tr><td class="lbl">DESIGNATION</td><td class="em-val" id="maxDesigDisplay">CIPHER SOVEREIGN</td></tr>
 <tr><td class="lbl">ALL PROTOCOLS</td><td class="val">I &mdash; XXII FULLY DECODED</td></tr>
@@ -270,10 +374,8 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 <tr><td class="lbl">AUTHORITY</td><td class="em-val">ABSOLUTE</td></tr>
 <tr><td class="lbl" style="color:#001a1a;">SEAL</td><td style="font-size:.44rem;color:#001a1a;">&#9650;-MAX-CRYPTOGRAPHIC-SOVEREIGN-&#918;-&#931;-MAX</td></tr>
 </table>
-
 <div class="max-divider"></div>
 <div style="text-align:center;font-size:.44rem;color:#001a1a;letter-spacing:.4em;">&#9650; CRYPTOGRAPHIC SOVEREIGN AUTHORITY &bull; BEYOND ALL TIERS &#9650;</div>
-
 </div></div></div></div>
 <div style="font-size:.5rem;color:#001a1a;letter-spacing:.5em;margin-top:.8rem;text-align:center;">&#9650; &#9650; &#9650; &nbsp; TOTAL DOMINION &nbsp; &#9650; &#9650; &#9650;</div>
 </div>
@@ -282,114 +384,39 @@ button:hover{border-color:var(--fg);color:var(--fg);}button:disabled{opacity:.3;
 
 <script>
 const WORKER_URL = 'https://epsilon.archivetest.workers.dev/check';
-
-const _ts = () => {
-  const d = new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' UTC';
-};
-const _n = s => String(s).toLowerCase().replace(/[^a-z0-9]/g,'');
-
-const _PANELS = {stages:'block',stages2:'block',certA:'flex',certB:'flex',keyScreen:'flex',advWrap:'block',certMaster:'flex',zetaKeyScreen:'flex',zetaWrap:'block',certMax:'flex'};
-const _show = id => {
-  Object.keys(_PANELS).forEach(p=>{const el=document.getElementById(p);if(el)el.style.display='none';});
-  const tgt=document.getElementById(id);
-  if(tgt)tgt.style.display=_PANELS[id]||'block';
-};
-const _nx = (a,b) => {
-  const x=document.getElementById('stage'+a),y=document.getElementById('stage'+b);
-  if(x){x.classList.remove('active');x.style.display='none';}
-  if(y){y.classList.add('active');y.style.display='flex';}
-};
-const _ip = (ids,total) => ids.forEach((id,idx)=>{
-  const el=document.getElementById(id);if(!el)return;
-  for(let p=0;p<total;p++){const d=document.createElement('div');d.className='pip'+(p<idx?' on':p===idx?' cur':'');el.appendChild(d);}
-});
-const _iap = () => {
-  for(let s=15;s<=20;s++){const el=document.getElementById('ap'+s);if(!el)continue;for(let p=15;p<=20;p++){const d=document.createElement('div');d.className='adv-pip'+(p<s?' on':p===s?' cur':'');el.appendChild(d);}}
-};
-const _izp = () => {
-  for(let s=21;s<=22;s++){const el=document.getElementById('zp'+s);if(!el)continue;for(let p=21;p<=22;p++){const d=document.createElement('div');d.className='zeta-pip'+(p<s?' on':p===s?' cur':'');el.appendChild(d);}}
-};
-const _err = n => {
-  const el=document.getElementById('e'+n);if(!el)return;
-  el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1400);
-};
-const _busy = (n,on) => {
-  const b=document.getElementById('b'+n),w=document.getElementById('w'+n);
-  if(b)b.disabled=on;if(w)w.classList.toggle('show',on);
-};
-
-// Live name update on MAX cert
-function updateMaxName(){
-  const inp=document.getElementById('maxNameInput');
-  const val=(inp?inp.value:'').trim();
-  const display=val?val.toUpperCase():'CIPHER SOVEREIGN';
-  const nameEl=document.getElementById('maxNameDisplay');
-  const desigEl=document.getElementById('maxDesigDisplay');
-  if(nameEl)nameEl.textContent=display;
-  if(desigEl)desigEl.textContent=display;
-}
-
-async function _check(stage,answer){
-  try{
-    const res=await fetch(WORKER_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({stage:String(stage),answer:_n(answer)})
-    });
-    if(res.status===429){alert('Too many attempts. Please wait 60 seconds.');return false;}
-    const data=await res.json();
-    return data.ok===true;
-  }catch(e){alert('Connection error. Check your network.');return false;}
-}
-
-async function submit(n){
-  const inp=document.getElementById('s'+n);
-  if(!inp||!inp.value.trim())return;
-  _busy(n,true);
-  const ok=await _check(n,inp.value);
-  _busy(n,false);
-  if(ok){
-    if(n===7){const s=document.getElementById('stage7');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certA-ts').textContent=_ts();_show('certA');}
-    else if(n===14){const s=document.getElementById('stage14');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certB-ts').textContent=_ts();_show('certB');}
-    else if(n===20){const s=document.getElementById('stage20');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certM-ts').textContent=_ts();_show('certMaster');}
-    else if(n===21){_nx(21,22);}
-    else if(n===22){
-      const s=document.getElementById('stage22');if(s){s.classList.remove('active');s.style.display='none';}
-      document.getElementById('certMax-ts').textContent=_ts();
-      _show('certMax');
-      setTimeout(()=>{const inp=document.getElementById('maxNameInput');if(inp)inp.focus();},300);
-    }
-    else{_nx(n,n+1);}
-  }else{_err(n);}
-}
-
-async function submitKey(){
-  const inp=document.getElementById('sKey');if(!inp||!inp.value.trim())return;
-  _busy('Key',true);const ok=await _check('key',inp.value);_busy('Key',false);
-  if(ok){_build();_show('advWrap');setTimeout(()=>{const s=document.getElementById('stage15');if(s){s.classList.add('active');s.style.display='flex';}},60);}
-  else{_err('Key');}
-}
-
-async function submitZetaKey(){
-  const inp=document.getElementById('sZeta');if(!inp||!inp.value.trim())return;
-  _busy('Zeta',true);const ok=await _check('zeta',inp.value);_busy('Zeta',false);
-  if(ok){_buildZeta();_show('zetaWrap');setTimeout(()=>{const s=document.getElementById('stage21');if(s){s.classList.add('active');s.style.display='flex';}},60);}
-  else{_err('Zeta');}
-}
-
+const _ts=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' UTC';};
+const _n=s=>String(s).toLowerCase().replace(/[^a-z0-9]/g,'');
+const _PANELS={stages:'block',stages2:'block',certA:'flex',certB:'flex',keyScreen:'flex',advWrap:'block',certMaster:'flex',zetaKeyScreen:'flex',zetaWrap:'block',certMax:'flex'};
+const _show=id=>{Object.keys(_PANELS).forEach(p=>{const el=document.getElementById(p);if(el)el.style.display='none';});const tgt=document.getElementById(id);if(tgt)tgt.style.display=_PANELS[id]||'block';};
+const _nx=(a,b)=>{const x=document.getElementById('stage'+a),y=document.getElementById('stage'+b);if(x){x.classList.remove('active');x.style.display='none';}if(y){y.classList.add('active');y.style.display='flex';}};
+const _ip=(ids,total)=>ids.forEach((id,idx)=>{const el=document.getElementById(id);if(!el)return;for(let p=0;p<total;p++){const d=document.createElement('div');d.className='pip'+(p<idx?' on':p===idx?' cur':'');el.appendChild(d);}});
+const _iap=()=>{for(let s=15;s<=20;s++){const el=document.getElementById('ap'+s);if(!el)continue;for(let p=15;p<=20;p++){const d=document.createElement('div');d.className='adv-pip'+(p<s?' on':p===s?' cur':'');el.appendChild(d);}}};
+const _izp=()=>{for(let s=21;s<=22;s++){const el=document.getElementById('zp'+s);if(!el)continue;for(let p=21;p<=22;p++){const d=document.createElement('div');d.className='zeta-pip'+(p<s?' on':p===s?' cur':'');el.appendChild(d);}}};
+const _err=n=>{const el=document.getElementById('e'+n);if(!el)return;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1400);};
+const _busy=(n,on)=>{const b=document.getElementById('b'+n),w=document.getElementById('w'+n);if(b)b.disabled=on;if(w)w.classList.toggle('show',on);};
+function updateMaxName(){const inp=document.getElementById('maxNameInput');const val=(inp?inp.value:'').trim();const d=val?val.toUpperCase():'CIPHER SOVEREIGN';const a=document.getElementById('maxNameDisplay'),b=document.getElementById('maxDesigDisplay');if(a)a.textContent=d;if(b)b.textContent=d;}
+async function _check(stage,answer){try{const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stage:String(stage),answer:_n(answer)})});if(res.status===429){alert('Too many attempts. Wait 60 seconds.');return false;}const data=await res.json();return data.ok===true;}catch(e){alert('Connection error.');return false;}}
+async function submit(n){const inp=document.getElementById('s'+n);if(!inp||!inp.value.trim())return;_busy(n,true);const ok=await _check(n,inp.value);_busy(n,false);if(ok){if(n===7){const s=document.getElementById('stage7');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certA-ts').textContent=_ts();_show('certA');}else if(n===14){const s=document.getElementById('stage14');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certB-ts').textContent=_ts();_show('certB');}else if(n===20){const s=document.getElementById('stage20');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certM-ts').textContent=_ts();_show('certMaster');}else if(n===21){_nx(21,22);}else if(n===22){const s=document.getElementById('stage22');if(s){s.classList.remove('active');s.style.display='none';}document.getElementById('certMax-ts').textContent=_ts();_show('certMax');setTimeout(()=>{const i=document.getElementById('maxNameInput');if(i)i.focus();},300);}else{_nx(n,n+1);}}else{_err(n);}}
+async function submitKey(){const inp=document.getElementById('sKey');if(!inp||!inp.value.trim())return;_busy('Key',true);const ok=await _check('key',inp.value);_busy('Key',false);if(ok){_build();_show('advWrap');setTimeout(()=>{const s=document.getElementById('stage15');if(s){s.classList.add('active');s.style.display='flex';}},60);}else{_err('Key');}}
+async function submitZetaKey(){const inp=document.getElementById('sZeta');if(!inp||!inp.value.trim())return;_busy('Zeta',true);const ok=await _check('zeta',inp.value);_busy('Zeta',false);if(ok){_buildZeta();_show('zetaWrap');setTimeout(()=>{const s=document.getElementById('stage21');if(s){s.classList.add('active');s.style.display='flex';}},60);}else{_err('Zeta');}}
 window._proceedToB=()=>{_show('stages2');const s=document.getElementById('stage8');if(s){s.classList.add('active');s.style.display='flex';}};
 window._proceedToKey=()=>_show('keyScreen');
 window._proceedToZetaKey=()=>_show('zetaKeyScreen');
 
 function _build(){
   let h='';
-  h+='<div class="adv-stage" id="stage15"><div class="adv-tag">&#9632; 15 / 22</div><div class="adv-pips" id="ap15"></div><div class="box"><span class="s">-- RECIPROCAL POLYALPHABETIC --</span>KEY : <span class="h">PREVIOUS ANSWER (stage 12)</span><br>PROPERTY : <span class="h">SELF-RECIPROCAL</span><br>PERIOD : <span style="color:#0c2a0c;">1024</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">O A M V Y D O G</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s15" placeholder="plaintext" autocomplete="off"><button id="b15" onclick="submit(15)">submit</button><div class="pending" id="w15">&#9632; verifying</div><div class="err" id="e15">&#9644; denied</div></div>';
-  h+='<div class="adv-stage" id="stage16"><div class="adv-tag">&#9632; 16 / 22</div><div class="adv-pips" id="ap16"></div><div class="box"><span class="s">-- DIGRAPH CIPHER --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>PAD : <span class="h">X</span> (strip)<br>ROUNDS : <span style="color:#0c2a0c;">7</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">E B Q C E A N Y Q U</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s16" placeholder="plaintext" autocomplete="off"><button id="b16" onclick="submit(16)">submit</button><div class="pending" id="w16">&#9632; verifying</div><div class="err" id="e16">&#9644; denied</div></div>';
-  h+='<div class="adv-stage" id="stage17"><div class="adv-tag">&#9632; 17 / 22</div><div class="adv-pips" id="ap17"></div><div class="box"><span class="s">-- NUMERIC KEY STREAM --</span>DERIVE KEY &rarr; <span class="h">LETTER POSITIONS OF IRON mod 10</span><br>ALPHABET : <span class="h">A=1 ... Z=26</span><br>BLOCK : <span style="color:#0c2a0c;">128</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">B O V H A O S O L</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s17" placeholder="plaintext" autocomplete="off"><button id="b17" onclick="submit(17)">submit</button><div class="pending" id="w17">&#9632; verifying</div><div class="err" id="e17">&#9644; denied</div></div>';
-  h+='<div class="adv-stage" id="stage18"><div class="adv-tag">&#9632; 18 / 22</div><div class="adv-pips" id="ap18"></div><div class="box"><span class="s">-- POLYALPHABETIC --</span>KEY : <span class="h">PREVIOUS ANSWER (stage 16)</span><br>LENGTH : <span class="h">9</span><br>IC : <span style="color:#0c2a0c;">0.0387</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">X O B D Y L J C Q T</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s18" placeholder="plaintext" autocomplete="off"><button id="b18" onclick="submit(18)">submit</button><div class="pending" id="w18">&#9632; verifying</div><div class="err" id="e18">&#9644; denied</div></div>';
-  h+='<div class="adv-stage" id="stage19"><div class="adv-tag">&#9632; 19 / 22</div><div class="adv-pips" id="ap19"></div><div class="box"><span class="s">-- RECIPROCAL STREAM --</span>KEY : <span class="h">PREVIOUS ANSWER</span><br>PROPERTY : <span class="h">SELF-RECIPROCAL</span><br>IC : <span style="color:#0c2a0c;">0.0441</span><br><span class="s">------------------</span>INTERCEPT : <span class="a">U D A Q T W N G</span><br>PLAINTEXT &rarr; <span class="a">?</span></div><input id="s19" placeholder="plaintext" autocomplete="off"><button id="b19" onclick="submit(19)">submit</button><div class="pending" id="w19">&#9632; verifying</div><div class="err" id="e19">&#9644; denied</div></div>';
-  h+='<div class="adv-stage" id="stage20"><div class="adv-tag">&#9632; 20 / 22</div><div class="adv-pips" id="ap20"></div><div class="box"><span class="s">-- CONTINUOUS-KEY POLYALPHABETIC --</span>IC : <span class="h">0.0641</span><br>KEY PROVENANCE : <span class="h">FOUNDING DOCUMENT</span><br>KEY LENGTH : <span class="h">15</span><br>KEY CHARS : <span class="h">CHARS 1-15 (ALPHA ONLY)</span><br>ENTROPY : <span style="color:#0c2a0c;">4.29</span><br><span class="s">------------------</span>INTERCEPT (XV) : <span class="a">P O I O T V G K I A S M V W W</span><br>EXTRACT PLAINTEXT &rarr; <span class="a">?</span></div><input id="s20" placeholder="plaintext" autocomplete="off"><button id="b20" onclick="submit(20)">submit</button><div class="pending" id="w20">&#9632; verifying</div><div class="err" id="e20">&#9644; denied</div></div>';
+  // S15: ironveil → FourSquare(MERCURY,SATURN) = APIIZSYI
+  h+='<div class="adv-stage" id="stage15"><div class="adv-tag">&#9632; 15 / 22</div><div class="adv-pips" id="ap15"></div><div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>A P I I Z S Y I<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div><input id="s15" placeholder="plaintext" autocomplete="off"><button id="b15" onclick="submit(15)">submit</button><div class="pending" id="w15">&#9632; verifying</div><div class="err" id="e15">&#9644; denied</div></div>';
+  // S16: cataclysm → Bifid(OBSIDIAN,5) = NQCISMSTM
+  h+='<div class="adv-stage" id="stage16"><div class="adv-tag">&#9632; 16 / 22</div><div class="adv-pips" id="ap16"></div><div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>N Q C I S M S T M<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div><input id="s16" placeholder="plaintext" autocomplete="off"><button id="b16" onclick="submit(16)">submit</button><div class="pending" id="w16">&#9632; verifying</div><div class="err" id="e16">&#9644; denied</div></div>';
+  // S17: threshold → Playfair(ECLIPSE)+Atbash = JNLOZTIVYB
+  h+='<div class="adv-stage" id="stage17"><div class="adv-tag">&#9632; 17 / 22</div><div class="adv-pips" id="ap17"></div><div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>J N L O Z T I V Y B<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div><input id="s17" placeholder="plaintext" autocomplete="off"><button id="b17" onclick="submit(17)">submit</button><div class="pending" id="w17">&#9632; verifying</div><div class="err" id="e17">&#9644; denied</div></div>';
+  // S18: voidwalker → Beaufort(KRYPTOS)+Caesar(11) = AOBXIZSLYS
+  h+='<div class="adv-stage" id="stage18"><div class="adv-tag">&#9632; 18 / 22</div><div class="adv-pips" id="ap18"></div><div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>A O B X I Z S L Y S<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div><input id="s18" placeholder="plaintext" autocomplete="off"><button id="b18" onclick="submit(18)">submit</button><div class="pending" id="w18">&#9632; verifying</div><div class="err" id="e18">&#9644; denied</div></div>';
+  // S19: blindeye → TripleVigenere(ABYSS,SHADOW,CIPHER) = VBVPNRTR
+  h+='<div class="adv-stage" id="stage19"><div class="adv-tag">&#9632; 19 / 22</div><div class="adv-pips" id="ap19"></div><div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>V B V P N R T R<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div><input id="s19" placeholder="plaintext" autocomplete="off"><button id="b19" onclick="submit(19)">submit</button><div class="pending" id="w19">&#9632; verifying</div><div class="err" id="e19">&#9644; denied</div></div>';
+  // S20: theblindeyesees → Myszkowski(ECLIPSE)+Bifid(ZENITH,4) = HEEYOEWBZWAXOTP
+  h+='<div class="adv-stage" id="stage20"><div class="adv-tag">&#9632; 20 / 22</div><div class="adv-pips" id="ap20"></div><div class="box"><span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span>H E E Y O E W B Z W A X O T P<span class="s">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</span></div><input id="s20" placeholder="plaintext" autocomplete="off"><button id="b20" onclick="submit(20)">submit</button><div class="pending" id="w20">&#9632; verifying</div><div class="err" id="e20">&#9644; denied</div></div>';
   document.getElementById('advWrap').innerHTML=h;
   _iap();
   for(let s=15;s<=20;s++){(n=>{const inp=document.getElementById('s'+n);if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submit(n);}});})(s);}
@@ -397,50 +424,24 @@ function _build(){
 
 function _buildZeta(){
   let h='';
-  // Stage 21: TERMINUS encoded through Caesar rot13 → Atbash → Vigenère(ZETA) = SMOADDLU
-  h+='<div class="zeta-stage" id="stage21">';
-  h+='<div class="zeta-tag">&#9650; 21 / 22</div>';
-  h+='<div class="zeta-pips" id="zp21"></div>';
-  h+='<div class="zeta-box">';
-  h+='<span class="zs">&#x2014;&#x2014; TRIPLE-LAYER CIPHER &#x2014;&#x2014;</span>';
-  h+='LAYER 1 : <span class="zh">CAESAR</span> &mdash; SHIFT : <span class="zh">13</span><br>';
-  h+='LAYER 2 : <span class="zh">ATBASH</span> &mdash; REVERSE ALPHABET SUBSTITUTION<br>';
-  h+='LAYER 3 : <span class="zh">VIGEN&Egrave;RE</span> &mdash; KEY : <span class="zh">ZETA</span><br>';
-  h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
-  h+='ENTROPY : <span style="color:#001a1a;">4.21 bits</span><br>';
-  h+='IC : <span style="color:#001a1a;">0.0401</span><br>';
-  h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
-  h+='CIPHERTEXT : <span class="za">S M O A D D L U</span><br>';
-  h+='RECOVER PLAINTEXT &rarr; <span class="za">?</span>';
-  h+='</div>';
+  // S21: terminus → Caesar13→Atbash→Vigenere(ZETA) = SMOADDLU
+  h+='<div class="zeta-stage" id="stage21"><div class="zeta-tag">&#9650; 21 / 22</div><div class="zeta-pips" id="zp21"></div>';
+  h+='<div class="zeta-box"><span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
+  h+='<span class="za">S M O A D D L U</span>';
+  h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span></div>';
   h+='<input class="zeta-input" id="s21" placeholder="plaintext" autocomplete="off">';
   h+='<button class="zeta-btn" id="b21" onclick="submit(21)">submit</button>';
   h+='<div class="pending" id="w21" style="color:#00ffff;">&#9632; verifying</div>';
-  h+='<div class="err" id="e21" style="color:#ff00ff;">&#9644; denied</div>';
-  h+='</div>';
-
-  // Stage 22: BLACKSITE encoded through Vigenère(VOID) → Rail-fence(4) → Caesar rot19 = PJSZPBYSY
-  h+='<div class="zeta-stage" id="stage22">';
-  h+='<div class="zeta-tag">&#9650; 22 / 22 &#9650; FINAL &#9650;</div>';
-  h+='<div class="zeta-pips" id="zp22"></div>';
-  h+='<div class="zeta-box">';
-  h+='<span class="zs">&#x2014;&#x2014; TERMINAL TRIPLE-CIPHER &#x2014;&#x2014;</span>';
-  h+='LAYER 1 : <span class="zh">VIGEN&Egrave;RE</span> &mdash; KEY : <span class="zh">VOID</span><br>';
-  h+='LAYER 2 : <span class="zh">RAIL-FENCE TRANSPOSITION</span> &mdash; RAILS : <span class="zh">4</span><br>';
-  h+='LAYER 3 : <span class="zh">CAESAR</span> &mdash; SHIFT : <span class="zh">19</span><br>';
-  h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
-  h+='ENTROPY : <span style="color:#001a1a;">4.63 bits</span><br>';
-  h+='IC : <span style="color:#001a1a;">0.0388</span><br>';
-  h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
-  h+='CIPHERTEXT : <span class="za">P J S Z P B Y S Y</span><br>';
-  h+='RECOVER PLAINTEXT &rarr; <span class="za">?</span>';
-  h+='</div>';
+  h+='<div class="err" id="e21" style="color:#ff00ff;">&#9644; denied</div></div>';
+  // S22: blacksite → Vigenere(VOID)→RailFence4→Caesar19 = PJSZPBYSY
+  h+='<div class="zeta-stage" id="stage22"><div class="zeta-tag">&#9650; 22 / 22 &#9650; FINAL &#9650;</div><div class="zeta-pips" id="zp22"></div>';
+  h+='<div class="zeta-box"><span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span>';
+  h+='<span class="za">P J S Z P B Y S Y</span>';
+  h+='<span class="zs">&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</span></div>';
   h+='<input class="zeta-input" id="s22" placeholder="plaintext" autocomplete="off">';
   h+='<button class="zeta-btn" id="b22" onclick="submit(22)">submit</button>';
   h+='<div class="pending" id="w22" style="color:#00ffff;">&#9632; verifying</div>';
-  h+='<div class="err" id="e22" style="color:#ff00ff;">&#9644; denied</div>';
-  h+='</div>';
-
+  h+='<div class="err" id="e22" style="color:#ff00ff;">&#9644; denied</div></div>';
   document.getElementById('zetaWrap').innerHTML=h;
   _izp();
   for(let s=21;s<=22;s++){(n=>{const inp=document.getElementById('s'+n);if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submit(n);}});})(s);}
@@ -452,10 +453,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const s1=document.getElementById('stage1');if(s1){s1.style.display='flex';s1.classList.add('active');}
   _ip(['p1','p2','p3','p4','p5','p6','p7'],7);
   _ip(['p8','p9','p10','p11','p12','p13','p14'],7);
-  [1,2,3,4,5,6,7,8,9,10,11,12,13,14].forEach(n=>{
-    const el=document.getElementById('s'+n);
-    if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submit(n);}});
-  });
+  [1,2,3,4,5,6,7,8,9,10,11,12,13,14].forEach(n=>{const el=document.getElementById('s'+n);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submit(n);}});});
   document.getElementById('sKey')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitKey();}});
   document.getElementById('sZeta')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitZetaKey();}});
 });
